@@ -18,7 +18,11 @@ interface ResultTabsProps {
   onToggleSL: (v: boolean) => void;
 }
 
-const TABS = ['형태소 분석', '명사 추출', '토큰화'] as const;
+const TABS = [
+  { label: '형태소 분석', icon: 'M' },
+  { label: '명사 추출', icon: 'N' },
+  { label: '토큰화', icon: 'T' },
+] as const;
 
 export default function ResultTabs({
   analyzeTokens,
@@ -30,26 +34,48 @@ export default function ResultTabs({
   const [active, setActive] = useState<number>(0);
 
   return (
-    <section className="mt-6">
-      <div className="flex border-b border-gray-200">
-        {TABS.map((tab, i) => (
-          <button
-            key={tab}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
-              active === i
-                ? 'border-b-2 border-blue-600 text-blue-600'
-                : 'text-gray-500 hover:text-gray-700'
-            }`}
-            onClick={() => setActive(i)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-      <div className="py-4">
-        {active === 0 && <AnalyzeTab tokens={analyzeTokens} />}
-        {active === 1 && <NounsTab nouns={nouns} includeSL={includeSL} onToggleSL={onToggleSL} />}
-        {active === 2 && <TokenizeTab tokens={tokenizeTokens} />}
+    <section className="mt-8 animate-fade-in-up animate-stagger-3 opacity-0">
+      <div className="card overflow-hidden">
+        {/* Tab bar */}
+        <div className="flex border-b border-border">
+          {TABS.map((tab, i) => (
+            <button
+              key={tab.label}
+              className={`focus-ring relative flex-1 px-4 py-3.5 text-sm font-medium transition-all duration-200 ${
+                active === i
+                  ? 'text-[var(--accent-text)]'
+                  : 'text-muted hover:text-foreground'
+              }`}
+              onClick={() => setActive(i)}
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                <span
+                  className={`inline-flex h-5 w-5 items-center justify-center rounded-md text-[10px] font-bold transition-all duration-200 ${
+                    active === i
+                      ? 'bg-[var(--accent-soft)] text-[var(--accent-text)]'
+                      : 'bg-surface-hover text-muted'
+                  }`}
+                  style={{ fontFamily: 'var(--font-mono), monospace' }}
+                >
+                  {tab.icon}
+                </span>
+                {tab.label}
+              </span>
+              {active === i && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)]" />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab content */}
+        <div className="p-5">
+          {active === 0 && <AnalyzeTab tokens={analyzeTokens} />}
+          {active === 1 && (
+            <NounsTab nouns={nouns} includeSL={includeSL} onToggleSL={onToggleSL} />
+          )}
+          {active === 2 && <TokenizeTab tokens={tokenizeTokens} />}
+        </div>
       </div>
     </section>
   );

@@ -21,44 +21,54 @@ export default function InputSection({
   elapsed,
 }: InputSectionProps) {
   return (
-    <section className="space-y-3">
-      <textarea
-        className="w-full rounded-lg border border-gray-300 p-3 text-base focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none"
-        rows={4}
-        placeholder="한국어 텍스트를 입력하세요..."
-        value={text}
-        onChange={(e) => onTextChange(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-            e.preventDefault();
-            onAnalyze();
-          }
-        }}
-      />
-      <div className="flex flex-wrap items-center gap-2">
-        {EXAMPLES.map((ex) => (
-          <button
-            key={ex}
-            className="rounded-full border border-gray-200 px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
-            onClick={() => {
-              onTextChange(ex);
-            }}
-          >
-            {ex}
-          </button>
-        ))}
-        <div className="ml-auto flex items-center gap-3">
-          {elapsed !== null && (
-            <span className="text-sm text-gray-400">{elapsed.toFixed(2)}ms</span>
-          )}
-          <button
-            className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
-            onClick={onAnalyze}
-            disabled={loading || !text.trim()}
-          >
-            분석
-          </button>
+    <section className="animate-fade-in-up animate-stagger-2 opacity-0">
+      <div className="card p-1">
+        <textarea
+          className="focus-ring w-full rounded-[12px] bg-transparent p-4 text-base text-foreground placeholder-muted outline-none resize-none"
+          rows={4}
+          placeholder="한국어 텍스트를 입력하세요..."
+          value={text}
+          onChange={(e) => onTextChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+              e.preventDefault();
+              onAnalyze();
+            }
+          }}
+        />
+
+        <div className="flex items-center justify-between border-t border-border px-4 py-2.5">
+          <div className="flex items-center gap-2 overflow-x-auto">
+            <span className="text-xs text-muted shrink-0">Try:</span>
+            {EXAMPLES.map((ex, i) => (
+              <button
+                key={ex}
+                className={`focus-ring shrink-0 rounded-lg border border-border px-2.5 py-1 text-xs text-muted hover:text-foreground hover:bg-surface-hover transition-all duration-200 animate-fade-in-up opacity-0 animate-stagger-${i + 1}`}
+                onClick={() => onTextChange(ex)}
+              >
+                {ex}
+              </button>
+            ))}
+          </div>
         </div>
+      </div>
+
+      <div className="mt-3 flex items-center justify-end gap-3">
+        {elapsed !== null && (
+          <span
+            className="text-xs text-muted tabular-nums"
+            style={{ fontFamily: 'var(--font-mono), monospace' }}
+          >
+            {elapsed.toFixed(2)}ms
+          </span>
+        )}
+        <button
+          className="focus-ring rounded-xl bg-[var(--accent)] px-6 py-2.5 text-sm font-semibold text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-40 disabled:hover:brightness-100 transition-all duration-200"
+          onClick={onAnalyze}
+          disabled={loading || !text.trim()}
+        >
+          분석하기
+        </button>
       </div>
     </section>
   );

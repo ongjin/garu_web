@@ -6,14 +6,14 @@ export interface PosInfo {
   category: PosCategory;
 }
 
-export const POS_COLORS: Record<PosCategory, string> = {
-  noun: 'bg-blue-100 text-blue-800',
-  verb: 'bg-red-100 text-red-800',
-  particle: 'bg-gray-100 text-gray-700',
-  ending: 'bg-green-100 text-green-800',
-  adverb: 'bg-purple-100 text-purple-800',
-  affix: 'bg-orange-100 text-orange-800',
-  symbol: 'bg-yellow-100 text-yellow-800',
+export const POS_COLORS: Record<PosCategory, { bg: string; fg: string }> = {
+  noun:     { bg: 'var(--pos-noun-bg)',     fg: 'var(--pos-noun-fg)' },
+  verb:     { bg: 'var(--pos-verb-bg)',     fg: 'var(--pos-verb-fg)' },
+  particle: { bg: 'var(--pos-particle-bg)', fg: 'var(--pos-particle-fg)' },
+  ending:   { bg: 'var(--pos-ending-bg)',   fg: 'var(--pos-ending-fg)' },
+  adverb:   { bg: 'var(--pos-adverb-bg)',   fg: 'var(--pos-adverb-fg)' },
+  affix:    { bg: 'var(--pos-affix-bg)',    fg: 'var(--pos-affix-fg)' },
+  symbol:   { bg: 'var(--pos-symbol-bg)',   fg: 'var(--pos-symbol-fg)' },
 };
 
 export const POS_MAP: Record<string, PosInfo> = {
@@ -65,7 +65,7 @@ export function getPosInfo(pos: string): PosInfo {
   return POS_MAP[pos] ?? { label: pos, description: pos, category: 'symbol' };
 }
 
-export function getPosColor(pos: string): string {
+export function getPosColor(pos: string): { bg: string; fg: string } {
   const info = getPosInfo(pos);
   return POS_COLORS[info.category];
 }

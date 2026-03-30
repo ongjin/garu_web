@@ -67,7 +67,7 @@ export default function Home() {
   );
 
   return (
-    <main className="mx-auto max-w-2xl px-4 pb-8">
+    <main className="mx-auto max-w-[680px] px-5 pb-8">
       <Header loading={loading} modelInfo={modelInfo} />
       <InputSection
         text={text}
