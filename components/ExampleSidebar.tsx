@@ -17,7 +17,7 @@ export default function ExampleSidebar({ onSelect, open, onToggle }: ExampleSide
       {/* Toggle button - fixed on the right edge */}
       <button
         onClick={onToggle}
-        className="focus-ring fixed right-0 top-1/2 -translate-y-1/2 z-40 rounded-l-xl border border-r-0 border-border bg-surface px-2 py-4 text-muted hover:text-foreground hover:bg-surface-hover transition-all duration-200"
+        className="focus-ring fixed right-0 top-1/2 -translate-y-1/2 z-40 rounded-l-xl border border-r-0 border-border-strong bg-foreground text-background hover:opacity-80 px-2 py-4 transition-all duration-200 shadow-lg"
         style={{ right: open ? '340px' : '0', transition: 'right 0.3s ease' }}
         title={open ? '예시 닫기' : '예시 열기'}
       >
@@ -65,13 +65,13 @@ export default function ExampleSidebar({ onSelect, open, onToggle }: ExampleSide
           </button>
         </div>
 
-        {/* Category tabs - horizontal scroll */}
-        <div className="flex gap-1 overflow-x-auto border-b border-border px-4 py-2 scrollbar-none">
+        {/* Category tabs - wrapping grid */}
+        <div className="flex flex-wrap gap-1 border-b border-border px-4 py-3">
           {EXAMPLE_CATEGORIES.map((cat, i) => (
             <button
               key={cat.name}
               onClick={() => setActiveCategory(i)}
-              className={`focus-ring shrink-0 rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
+              className={`focus-ring rounded-lg px-2.5 py-1.5 text-xs font-medium transition-all duration-200 ${
                 activeCategory === i
                   ? 'bg-[var(--accent-soft)] text-[var(--accent-text)]'
                   : 'text-muted hover:text-foreground hover:bg-surface-hover'
