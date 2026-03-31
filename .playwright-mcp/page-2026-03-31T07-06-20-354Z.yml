@@ -1,8 +1,0 @@
-- generic [active] [ref=e1]:
-  - generic [ref=e2]:
-    - img [ref=e3]
-    - generic [ref=e13]: 가루
-    - generic [ref=e14]: Garu
-    - generic [ref=e15]: 한국어 형태소 분석기
-    - generic [ref=e16]: 100% browser-native
-  - generic [ref=e17]: garu.zerry.co.kr
