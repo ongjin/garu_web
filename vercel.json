@@ -1,3 +1,9 @@
 {
-  "cleanUrls": false
+  "cleanUrls": false,
+  "rewrites": [
+    {
+      "source": "/naver2b1282a894ff1ba1ce91e9e0676e079c.html",
+      "destination": "/naver2b1282a894ff1ba1ce91e9e0676e079c.html"
+    }
+  ]
 }
