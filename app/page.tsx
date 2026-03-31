@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import InputSection from '@/components/InputSection';
 import ResultTabs from '@/components/ResultTabs';
 import Footer from '@/components/Footer';
+import SeoContent from '@/components/SeoContent';
 import ExampleSidebar from '@/components/ExampleSidebar';
 
 interface Token {
@@ -98,6 +99,7 @@ export default function Home() {
           includeSL={includeSL}
           onToggleSL={handleToggleSL}
         />
+        <SeoContent />
         <Footer />
       </main>
 
