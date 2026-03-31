@@ -14,27 +14,6 @@ export default function ExampleSidebar({ onSelect, open, onToggle }: ExampleSide
 
   return (
     <>
-      {/* Toggle button - fixed on the right edge */}
-      <button
-        onClick={onToggle}
-        className="focus-ring fixed right-0 top-1/2 -translate-y-1/2 z-40 rounded-l-xl border border-r-0 border-border-strong bg-foreground text-background hover:opacity-80 px-2 py-4 transition-all duration-200 shadow-lg"
-        style={{ right: open ? '340px' : '0', transition: 'right 0.3s ease' }}
-        title={open ? '예시 닫기' : '예시 열기'}
-      >
-        <svg
-          className="h-4 w-4 transition-transform duration-300"
-          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-      </button>
-
       {/* Backdrop for mobile */}
       {open && (
         <div
@@ -43,11 +22,30 @@ export default function ExampleSidebar({ onSelect, open, onToggle }: ExampleSide
         />
       )}
 
-      {/* Sidebar panel */}
+      {/* Sidebar panel + toggle as one unit */}
       <aside
         className="fixed right-0 top-0 z-30 h-full w-[340px] border-l border-border bg-background flex flex-col transition-transform duration-300 ease-in-out"
         style={{ transform: open ? 'translateX(0)' : 'translateX(100%)' }}
       >
+        {/* Toggle button - attached to the left edge of the sidebar */}
+        <button
+          onClick={onToggle}
+          className="focus-ring absolute left-0 top-1/2 -translate-x-full -translate-y-1/2 rounded-l-xl border border-r-0 border-border-strong bg-foreground text-background hover:opacity-80 px-2 py-4 shadow-lg"
+          title={open ? '예시 닫기' : '예시 열기'}
+        >
+          <svg
+            className="h-4 w-4 transition-transform duration-300"
+            style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <div>
