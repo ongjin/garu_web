@@ -24,7 +24,7 @@ export default function ExampleSidebar({ onSelect, open, onToggle }: ExampleSide
 
       {/* Sidebar panel + toggle as one unit */}
       <aside
-        className="fixed right-0 top-0 z-30 h-full w-[340px] border-l border-border bg-background flex flex-col transition-transform duration-300 ease-in-out"
+        className="fixed right-0 top-0 z-30 h-full w-[340px] border-l border-border bg-background flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
         style={{ transform: open ? 'translateX(0)' : 'translateX(100%)' }}
       >
         {/* Toggle button - attached to the left edge of the sidebar */}
