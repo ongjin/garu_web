@@ -1,10 +1,3 @@
-const EXAMPLES = [
-  '배가 아파서 약을 먹었다',
-  '나는 하늘을 나는 새를 보았다',
-  'AI 기술이 b2b 시장에서 발전했다',
-  '인공지능 기반 자연어처리 연구',
-];
-
 interface InputSectionProps {
   text: string;
   onTextChange: (text: string) => void;
@@ -36,21 +29,6 @@ export default function InputSection({
             }
           }}
         />
-
-        <div className="flex items-center justify-between border-t border-border px-4 py-2.5">
-          <div className="flex items-center gap-2 overflow-x-auto">
-            <span className="text-xs text-muted shrink-0">Try:</span>
-            {EXAMPLES.map((ex, i) => (
-              <button
-                key={ex}
-                className={`focus-ring shrink-0 rounded-lg border border-border px-2.5 py-1 text-xs text-muted hover:text-foreground hover:bg-surface-hover transition-all duration-200 animate-fade-in-up opacity-0 animate-stagger-${i + 1}`}
-                onClick={() => onTextChange(ex)}
-              >
-                {ex}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="mt-3 flex items-center justify-end gap-3">

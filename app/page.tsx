@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import InputSection from '@/components/InputSection';
 import ResultTabs from '@/components/ResultTabs';
 import Footer from '@/components/Footer';
+import ExampleSidebar from '@/components/ExampleSidebar';
 
 interface Token {
   text: string;
@@ -30,6 +31,7 @@ export default function Home() {
   const [tokenizeTokens, setTokenizeTokens] = useState<string[]>([]);
   const [elapsed, setElapsed] = useState<number | null>(null);
   const [includeSL, setIncludeSL] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -44,16 +46,28 @@ export default function Home() {
     };
   }, []);
 
-  const handleAnalyze = useCallback(() => {
+  const runAnalysis = useCallback((input: string, sl: boolean) => {
     const garu = garuRef.current;
-    if (!garu || !text.trim()) return;
+    if (!garu || !input.trim()) return;
 
-    const result = garu.analyze(text) as { tokens: Token[]; elapsed: number };
+    const result = garu.analyze(input) as { tokens: Token[]; elapsed: number };
     setAnalyzeTokens(result.tokens);
     setElapsed(result.elapsed);
-    setNouns(garu.nouns(text, { includeSL }) as string[]);
-    setTokenizeTokens(garu.tokenize(text) as string[]);
-  }, [text, includeSL]);
+    setNouns(garu.nouns(input, { includeSL: sl }) as string[]);
+    setTokenizeTokens(garu.tokenize(input) as string[]);
+  }, []);
+
+  const handleAnalyze = useCallback(() => {
+    runAnalysis(text, includeSL);
+  }, [text, includeSL, runAnalysis]);
+
+  const handleExampleSelect = useCallback(
+    (example: string) => {
+      setText(example);
+      runAnalysis(example, includeSL);
+    },
+    [includeSL, runAnalysis],
+  );
 
   const handleToggleSL = useCallback(
     (v: boolean) => {
@@ -67,23 +81,31 @@ export default function Home() {
   );
 
   return (
-    <main className="mx-auto max-w-[680px] px-5 pb-8">
-      <Header loading={loading} modelInfo={modelInfo} />
-      <InputSection
-        text={text}
-        onTextChange={setText}
-        onAnalyze={handleAnalyze}
-        loading={loading}
-        elapsed={elapsed}
+    <>
+      <main className="mx-auto max-w-[680px] px-5 pb-8">
+        <Header loading={loading} modelInfo={modelInfo} />
+        <InputSection
+          text={text}
+          onTextChange={setText}
+          onAnalyze={handleAnalyze}
+          loading={loading}
+          elapsed={elapsed}
+        />
+        <ResultTabs
+          analyzeTokens={analyzeTokens}
+          nouns={nouns}
+          tokenizeTokens={tokenizeTokens}
+          includeSL={includeSL}
+          onToggleSL={handleToggleSL}
+        />
+        <Footer />
+      </main>
+
+      <ExampleSidebar
+        onSelect={handleExampleSelect}
+        open={sidebarOpen}
+        onToggle={() => setSidebarOpen((v) => !v)}
       />
-      <ResultTabs
-        analyzeTokens={analyzeTokens}
-        nouns={nouns}
-        tokenizeTokens={tokenizeTokens}
-        includeSL={includeSL}
-        onToggleSL={handleToggleSL}
-      />
-      <Footer />
-    </main>
+    </>
   );
 }
