@@ -25,6 +25,10 @@
   --accent-soft: #ccfbf1;
   --accent-text: #0f766e;
 
+  --warn-bg: #fffbeb;
+  --warn-border: #fcd34d;
+  --warn-text: #92400e;
+
   --pos-noun-bg: #dbeafe;
   --pos-noun-fg: #1e40af;
   --pos-verb-bg: #fce7f3;
@@ -52,6 +56,10 @@
   --accent: #2dd4bf;
   --accent-soft: #0f3d38;
   --accent-text: #5eead4;
+
+  --warn-bg: #1c1a0e;
+  --warn-border: #854d0e;
+  --warn-text: #fbbf24;
 
   --pos-noun-bg: #1e2a4a;
   --pos-noun-fg: #93bbfd;

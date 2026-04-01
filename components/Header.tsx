@@ -74,8 +74,13 @@ export default function Header({ loading, modelInfo, latestVersion }: HeaderProp
             href="https://www.npmjs.com/package/garu-ko"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs text-amber-700 hover:bg-amber-100 transition-colors animate-fade-in-up opacity-0 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-400 dark:hover:bg-amber-900"
-            style={{ animationDelay: '0.25s' }}
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs hover:brightness-95 transition-all animate-fade-in-up opacity-0"
+            style={{
+              backgroundColor: 'var(--warn-bg)',
+              borderColor: 'var(--warn-border)',
+              color: 'var(--warn-text)',
+              animationDelay: '0.25s',
+            }}
           >
             <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
