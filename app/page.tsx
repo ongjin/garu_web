@@ -33,6 +33,7 @@ export default function Home() {
   const [elapsed, setElapsed] = useState<number | null>(null);
   const [includeSL, setIncludeSL] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [latestVersion, setLatestVersion] = useState<string | undefined>();
 
   useEffect(() => {
     (async () => {
@@ -42,6 +43,10 @@ export default function Home() {
       setModelInfo(instance.modelInfo());
       setLoading(false);
     })();
+    fetch('https://registry.npmjs.org/garu-ko/latest')
+      .then((r) => r.json())
+      .then((d) => setLatestVersion(d.version))
+      .catch(() => {});
     return () => {
       garuRef.current?.destroy();
     };
@@ -84,7 +89,7 @@ export default function Home() {
   return (
     <>
       <main className="mx-auto max-w-[680px] px-5 pb-8">
-        <Header loading={loading} modelInfo={modelInfo} />
+        <Header loading={loading} modelInfo={modelInfo} latestVersion={latestVersion} />
         <InputSection
           text={text}
           onTextChange={setText}

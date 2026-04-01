@@ -4,9 +4,24 @@ import Logo from './Logo';
 interface HeaderProps {
   loading: boolean;
   modelInfo?: { version: string; size: number; accuracy: number };
+  latestVersion?: string;
 }
 
-export default function Header({ loading, modelInfo }: HeaderProps) {
+function versionsBehind(current: string, latest: string): number {
+  const parse = (v: string) => v.split('.').map(Number);
+  const [cMaj, cMin, cPat] = parse(current);
+  const [lMaj, lMin, lPat] = parse(latest);
+  if (cMaj !== lMaj) return (lMaj - cMaj) * 100;
+  if (cMin !== lMin) return (lMin - cMin) * 10 + (lPat - cPat);
+  return lPat - cPat;
+}
+
+export default function Header({ loading, modelInfo, latestVersion }: HeaderProps) {
+  const behind =
+    modelInfo && latestVersion && modelInfo.version !== latestVersion
+      ? versionsBehind(modelInfo.version, latestVersion)
+      : 0;
+
   return (
     <header className="relative pt-12 pb-8 animate-fade-in-up">
       <div className="absolute top-4 right-0">
@@ -53,6 +68,23 @@ export default function Header({ loading, modelInfo }: HeaderProps) {
             </>
           ) : null}
         </div>
+
+        {behind > 0 && latestVersion && (
+          <a
+            href="https://www.npmjs.com/package/garu-ko"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs text-amber-700 hover:bg-amber-100 transition-colors animate-fade-in-up opacity-0 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-400 dark:hover:bg-amber-900"
+            style={{ animationDelay: '0.25s' }}
+          >
+            <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            최신 버전 v{latestVersion} 사용 가능 ({behind}버전 뒤처짐)
+          </a>
+        )}
       </div>
     </header>
   );
