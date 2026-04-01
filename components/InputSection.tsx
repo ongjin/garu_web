@@ -3,6 +3,7 @@ interface InputSectionProps {
   onTextChange: (text: string) => void;
   onAnalyze: () => void;
   loading: boolean;
+  analyzing: boolean;
   elapsed: number | null;
 }
 
@@ -11,8 +12,11 @@ export default function InputSection({
   onTextChange,
   onAnalyze,
   loading,
+  analyzing,
   elapsed,
 }: InputSectionProps) {
+  const disabled = loading || analyzing || !text.trim();
+
   return (
     <section className="animate-fade-in-up animate-stagger-2 opacity-0">
       <div className="card p-1">
@@ -22,17 +26,18 @@ export default function InputSection({
           placeholder="한국어 텍스트를 입력하세요..."
           value={text}
           onChange={(e) => onTextChange(e.target.value)}
+          disabled={analyzing}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
               e.preventDefault();
-              onAnalyze();
+              if (!disabled) onAnalyze();
             }
           }}
         />
       </div>
 
       <div className="mt-3 flex items-center justify-end gap-3">
-        {elapsed !== null && (
+        {elapsed !== null && !analyzing && (
           <span
             className="text-xs text-muted tabular-nums"
             style={{ fontFamily: 'var(--font-mono), monospace' }}
@@ -41,11 +46,18 @@ export default function InputSection({
           </span>
         )}
         <button
-          className="focus-ring rounded-xl bg-[var(--accent)] px-6 py-2.5 text-sm font-semibold text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-40 disabled:hover:brightness-100 transition-all duration-200"
+          className="focus-ring rounded-xl bg-[var(--accent)] px-6 py-2.5 text-sm font-semibold text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:hover:brightness-100 disabled:cursor-wait transition-all duration-200 flex items-center gap-2"
           onClick={onAnalyze}
-          disabled={loading || !text.trim()}
+          disabled={disabled}
         >
-          분석하기
+          {analyzing ? (
+            <>
+              <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              분석 중...
+            </>
+          ) : (
+            '분석하기'
+          )}
         </button>
       </div>
     </section>

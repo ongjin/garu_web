@@ -34,6 +34,7 @@ export default function Home() {
   const [includeSL, setIncludeSL] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [latestVersion, setLatestVersion] = useState<string | undefined>();
+  const [analyzing, setAnalyzing] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -56,19 +57,26 @@ export default function Home() {
     const garu = garuRef.current;
     if (!garu || !input.trim()) return;
 
-    const result = garu.analyze(input) as { tokens: Token[]; elapsed: number };
-    setAnalyzeTokens(result.tokens);
-    setElapsed(result.elapsed);
+    setAnalyzing(true);
+    // Yield a frame so the UI can show loading state before WASM blocks main thread
+    setTimeout(() => {
+      try {
+        const result = garu.analyze(input) as { tokens: Token[]; elapsed: number };
+        setAnalyzeTokens(result.tokens);
+        setElapsed(result.elapsed);
 
-    // Extract nouns and tokens from analyze result to avoid redundant analysis
-    const nounTags = new Set(['NNG', 'NNP']);
-    if (sl) nounTags.add('SL');
-    setNouns(
-      result.tokens
-        .filter((t: Token) => nounTags.has(t.pos))
-        .map((t: Token) => t.text),
-    );
-    setTokenizeTokens(result.tokens.map((t: Token) => t.text));
+        const nounTags = new Set(['NNG', 'NNP']);
+        if (sl) nounTags.add('SL');
+        setNouns(
+          result.tokens
+            .filter((t: Token) => nounTags.has(t.pos))
+            .map((t: Token) => t.text),
+        );
+        setTokenizeTokens(result.tokens.map((t: Token) => t.text));
+      } finally {
+        setAnalyzing(false);
+      }
+    }, 0);
   }, []);
 
   const handleAnalyze = useCallback(() => {
@@ -107,6 +115,7 @@ export default function Home() {
           onTextChange={setText}
           onAnalyze={handleAnalyze}
           loading={loading}
+          analyzing={analyzing}
           elapsed={elapsed}
         />
         <ResultTabs
