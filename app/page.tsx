@@ -59,8 +59,16 @@ export default function Home() {
     const result = garu.analyze(input) as { tokens: Token[]; elapsed: number };
     setAnalyzeTokens(result.tokens);
     setElapsed(result.elapsed);
-    setNouns(garu.nouns(input, { includeSL: sl }) as string[]);
-    setTokenizeTokens(garu.tokenize(input) as string[]);
+
+    // Extract nouns and tokens from analyze result to avoid redundant analysis
+    const nounTags = new Set(['NNG', 'NNP']);
+    if (sl) nounTags.add('SL');
+    setNouns(
+      result.tokens
+        .filter((t: Token) => nounTags.has(t.pos))
+        .map((t: Token) => t.text),
+    );
+    setTokenizeTokens(result.tokens.map((t: Token) => t.text));
   }, []);
 
   const handleAnalyze = useCallback(() => {
@@ -78,12 +86,16 @@ export default function Home() {
   const handleToggleSL = useCallback(
     (v: boolean) => {
       setIncludeSL(v);
-      const garu = garuRef.current;
-      if (garu && text.trim()) {
-        setNouns(garu.nouns(text, { includeSL: v }) as string[]);
-      }
+      // Re-extract nouns from existing tokens instead of re-analyzing
+      const nounTags = new Set(['NNG', 'NNP']);
+      if (v) nounTags.add('SL');
+      setNouns(
+        analyzeTokens
+          .filter((t) => nounTags.has(t.pos))
+          .map((t) => t.text),
+      );
     },
-    [text],
+    [analyzeTokens],
   );
 
   return (
