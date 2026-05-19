@@ -14,5 +14,5 @@ export interface SearchAdapter {
   name: string;
   ready: boolean;
   init(docs: SampleDoc[]): Promise<void>;
-  search(query: string): SearchHit[];
+  search(query: string): SearchHit[] | Promise<SearchHit[]>;
 }
