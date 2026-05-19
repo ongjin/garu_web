@@ -12,15 +12,17 @@ export class OramaGaruAdapter implements SearchAdapter {
   private db: AnyOrama | null = null;
 
   async init(docs: SampleDoc[]): Promise<void> {
+    this.ready = false;
     const garu = (await loadGaru()) as Garu;
     const tokenizer = await createTokenizer({ garu });
-    this.db = await create({
+    const db = await create({
       schema: { id: 'string', title: 'string', body: 'string' } as const,
       components: { tokenizer },
     });
     for (const doc of docs) {
-      await insert(this.db, doc);
+      await insert(db, doc);
     }
+    this.db = db;
     this.ready = true;
   }
 
