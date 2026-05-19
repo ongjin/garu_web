@@ -1,4 +1,3 @@
-import ThemeToggle from './ThemeToggle';
 import Logo from './Logo';
 
 interface HeaderProps {
@@ -23,11 +22,7 @@ export default function Header({ loading, modelInfo, latestVersion }: HeaderProp
       : 0;
 
   return (
-    <header className="relative pt-12 pb-8 animate-fade-in-up">
-      <div className="absolute top-4 right-0">
-        <ThemeToggle />
-      </div>
-
+    <header className="relative pt-8 pb-8 animate-fade-in-up">
       <div className="flex flex-col items-center">
         <Logo size={64} />
 

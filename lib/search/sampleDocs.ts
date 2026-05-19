@@ -4,6 +4,14 @@ export interface SampleDoc {
   body: string;
 }
 
+export interface SampleDocGroup {
+  id: string;
+  label: string;
+  query: string;
+  description: string;
+  docIds: string[];
+}
+
 export const SAMPLE_DOCS: SampleDoc[] = [
   // === "먹다" 활용형 (8개) ===
   { id: '1', title: '아침 식사의 중요성', body: '나는 매일 아침에 밥을 먹는다. 어제도 빵을 먹었고 오늘은 김치찌개를 먹었다.' },
@@ -56,4 +64,49 @@ export const SAMPLE_DOCS: SampleDoc[] = [
   { id: '38', title: '한라산 등반', body: '제주도 한라산은 남한 최고봉이다. 사계절 등반이 가능하다.' },
   { id: '39', title: 'K-팝의 세계화', body: 'K-팝은 2010년대 이후 글로벌 음악 시장의 한 축으로 자리잡았다.' },
   { id: '40', title: '김치의 종류', body: '김치는 지역과 계절에 따라 종류가 다양하다. 배추김치가 가장 보편적이다.' },
+];
+
+export const SAMPLE_DOC_GROUPS: SampleDocGroup[] = [
+  {
+    id: 'eat',
+    label: '먹다 활용형',
+    query: '먹다',
+    description: '먹는다, 먹었다, 먹자, 먹기처럼 용언 활용이 섞인 문장',
+    docIds: ['1', '2', '3', '4', '5', '6', '7', '8'],
+  },
+  {
+    id: 'school',
+    label: '학교 조사 변형',
+    query: '학교',
+    description: '학교에, 학교를, 학교에서처럼 조사 결합이 섞인 문장',
+    docIds: ['9', '10', '11', '12', '13', '14', '15'],
+  },
+  {
+    id: 'good',
+    label: '좋다 활용형',
+    query: '좋다',
+    description: '좋아서, 좋았다, 좋은, 좋아지는처럼 형용사 활용이 섞인 문장',
+    docIds: ['16', '17', '18', '19', '20', '21', '22'],
+  },
+  {
+    id: 'ai',
+    label: 'AI 외래어',
+    query: 'AI',
+    description: '라틴 문자 외래어가 한국어 문장 안에 섞인 문서',
+    docIds: ['23', '24', '25', '26', '27', '28'],
+  },
+  {
+    id: 'korean',
+    label: '한국어 정상 매치',
+    query: '한국어',
+    description: '표면형 검색도 잘 맞아야 하는 한국어 문서',
+    docIds: ['29', '30', '31', '32', '33', '34', '35'],
+  },
+  {
+    id: 'noise',
+    label: '노이즈 문서',
+    query: '경복궁',
+    description: '추천 검색어와 직접 관련 없는 배경 문서',
+    docIds: ['36', '37', '38', '39', '40'],
+  },
 ];

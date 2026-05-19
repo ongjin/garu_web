@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import type { AnalyzeResult, Garu, ModelInfo, Token } from 'garu-ko';
+import PageNav from '@/components/PageNav';
 import Header from '@/components/Header';
 import InputSection from '@/components/InputSection';
 import ResultTabs from '@/components/ResultTabs';
 import Footer from '@/components/Footer';
 import SeoContent from '@/components/SeoContent';
 import ExampleSidebar from '@/components/ExampleSidebar';
+import { loadGaru } from '@/lib/garu/loadGaru';
 
 export default function Home() {
   const garuRef = useRef<Garu | null>(null);
@@ -25,9 +27,10 @@ export default function Home() {
   const [analyzing, setAnalyzing] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
-      const { Garu } = await import('garu-ko');
-      const instance = await Garu.load();
+      const instance = await loadGaru();
+      if (cancelled) return;
       garuRef.current = instance;
       setModelInfo(instance.modelInfo());
       setLoading(false);
@@ -37,7 +40,7 @@ export default function Home() {
       .then((d) => setLatestVersion(d.version))
       .catch(() => {});
     return () => {
-      garuRef.current?.destroy();
+      cancelled = true;
     };
   }, []);
 
@@ -96,7 +99,8 @@ export default function Home() {
 
   return (
     <>
-      <main className="mx-auto max-w-[680px] px-5 pb-8">
+      <main className="mx-auto max-w-[1100px] px-5 pb-8">
+        <PageNav />
         <Header loading={loading} modelInfo={modelInfo} latestVersion={latestVersion} />
         <InputSection
           text={text}

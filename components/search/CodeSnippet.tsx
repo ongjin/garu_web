@@ -50,17 +50,6 @@ export default function CodeSnippet({ install, code }: Props) {
           <code>{code}</code>
         </pre>
       </div>
-
-      <p className="text-center text-xs text-muted">
-        <a
-          href="https://github.com/ongjin/garu"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-[var(--accent-text)]"
-        >
-          github.com/ongjin/garu
-        </a>
-      </p>
     </section>
   );
 }
