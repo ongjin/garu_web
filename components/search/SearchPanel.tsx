@@ -14,10 +14,7 @@ export default function SearchPanel({ adapter, query, variant }: Props) {
   const [hits, setHits] = useState<SearchHit[]>([]);
 
   useEffect(() => {
-    if (!adapter.ready) {
-      setHits([]);
-      return;
-    }
+    if (!adapter.ready) return;
     let cancelled = false;
     Promise.resolve(adapter.search(query)).then((result) => {
       if (!cancelled) setHits(result);

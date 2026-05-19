@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import type { AnalyzeResult, Garu, ModelInfo, Token } from 'garu-ko';
 import Header from '@/components/Header';
 import InputSection from '@/components/InputSection';
 import ResultTabs from '@/components/ResultTabs';
@@ -8,21 +9,8 @@ import Footer from '@/components/Footer';
 import SeoContent from '@/components/SeoContent';
 import ExampleSidebar from '@/components/ExampleSidebar';
 
-interface Token {
-  text: string;
-  pos: string;
-  start: number;
-  end: number;
-}
-
-interface ModelInfo {
-  version: string;
-  size: number;
-  accuracy: number;
-}
-
 export default function Home() {
-  const garuRef = useRef<any>(null);
+  const garuRef = useRef<Garu | null>(null);
   const [loading, setLoading] = useState(true);
   const [modelInfo, setModelInfo] = useState<ModelInfo | undefined>();
 
@@ -61,7 +49,7 @@ export default function Home() {
     // Yield a frame so the UI can show loading state before WASM blocks main thread
     setTimeout(() => {
       try {
-        const result = garu.analyze(input) as { tokens: Token[]; elapsed: number };
+        const result = garu.analyze(input) as AnalyzeResult;
         setAnalyzeTokens(result.tokens);
         setElapsed(result.elapsed);
 
