@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
         fallback: {
           ...config.resolve?.fallback,
           fs: false,
+          'fs/promises': false,
           path: false,
           url: false,
         },
