@@ -6,20 +6,10 @@ interface HeaderProps {
   latestVersion?: string;
 }
 
-function versionsBehind(current: string, latest: string): number {
-  const parse = (v: string) => v.split('.').map(Number);
-  const [cMaj, cMin, cPat] = parse(current);
-  const [lMaj, lMin, lPat] = parse(latest);
-  if (cMaj !== lMaj) return (lMaj - cMaj) * 100;
-  if (cMin !== lMin) return (lMin - cMin) * 10 + (lPat - cPat);
-  return lPat - cPat;
-}
-
 export default function Header({ loading, modelInfo, latestVersion }: HeaderProps) {
-  const behind =
-    modelInfo && latestVersion && modelInfo.version !== latestVersion
-      ? versionsBehind(modelInfo.version, latestVersion)
-      : 0;
+  const isOutdated = Boolean(
+    modelInfo && latestVersion && modelInfo.version !== latestVersion,
+  );
 
   return (
     <header className="relative pt-8 pb-8 animate-fade-in-up">
@@ -64,7 +54,7 @@ export default function Header({ loading, modelInfo, latestVersion }: HeaderProp
           ) : null}
         </div>
 
-        {behind > 0 && latestVersion && (
+        {isOutdated && latestVersion && (
           <a
             href="https://www.npmjs.com/package/garu-ko"
             target="_blank"
@@ -82,7 +72,7 @@ export default function Header({ loading, modelInfo, latestVersion }: HeaderProp
               <line x1="12" y1="8" x2="12" y2="12" />
               <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
-            최신 버전 v{latestVersion} 사용 가능 ({behind}버전 뒤처짐)
+            최신 버전 v{latestVersion} 사용 가능
           </a>
         )}
       </div>
