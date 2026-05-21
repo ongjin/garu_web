@@ -22,9 +22,21 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const SITE_URL = 'https://garu.zerry.co.kr';
-const TITLE = '가루 (Garu) — 한국어 형태소 분석기 | Korean Morphological Analyzer';
+const SITE_NAME = '가루(Garu)';
+const SOFTWARE_NAME = '한국어 형태소 분석기 가루(Garu)';
+const TITLE =
+  '한국어 형태소 분석기 가루(Garu) - 브라우저에서 바로 실행되는 WASM 분석기';
 const DESCRIPTION =
-  '가루(Garu)는 브라우저에서 바로 실행되는 한국어 형태소 분석기입니다. 1.7MB 경량 모델, 93KB WASM, F1 95.3% 정확도. 서버 없이 100% 클라이언트에서 형태소 분석, 명사 추출, 토큰화를 수행합니다. npm install garu-ko';
+  '한국어 형태소 분석기 가루(Garu)는 브라우저에서 바로 실행되는 WASM 기반 분석기입니다. 1.7MB 경량 모델, 93KB WASM, F1 95.3% 정확도. 서버 없이 100% 클라이언트에서 형태소 분석, 명사 추출, 토큰화를 수행합니다. npm install garu-ko';
+const SOFTWARE_VERSION = '0.9.0';
+const SAME_AS = [
+  'https://github.com/ongjin/garu',
+  'https://www.npmjs.com/package/garu-ko',
+  'https://news.hada.io/topic?id=28002',
+];
+const AUTHOR_ID = 'https://zerry.co.kr/#person';
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const SOFTWARE_ID = `${SITE_URL}/#software`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -67,7 +79,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ko_KR',
     url: SITE_URL,
-    siteName: '가루 (Garu)',
+    siteName: SITE_NAME,
     title: TITLE,
     description: DESCRIPTION,
     images: [
@@ -75,7 +87,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: '가루 (Garu) — 한국어 형태소 분석기',
+        alt: SOFTWARE_NAME,
       },
     ],
   },
@@ -108,28 +120,79 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: '가루 (Garu)',
-    alternateName: 'garu-ko',
-    description:
-      '브라우저에서 바로 실행되는 한국어 형태소 분석기. 1.7MB 경량 모델, WASM 기반, F1 95.3% 정확도.',
-    url: SITE_URL,
-    applicationCategory: 'DeveloperApplication',
-    operatingSystem: 'Web Browser',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    author: {
-      '@type': 'Person',
-      name: 'Yongjin Cho',
-      url: 'https://zerry.co.kr',
-    },
-    softwareVersion: '0.3.4',
-    programmingLanguage: ['TypeScript', 'Rust', 'WebAssembly'],
-    keywords:
-      '한국어 형태소 분석기, 형태소 분석, 한국어 형태소, 한글 형태소, Korean morphological analyzer, NLP, 자연어처리',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': WEBSITE_ID,
+        name: SITE_NAME,
+        alternateName: ['garu-ko', '한국어 형태소 분석기 가루'],
+        url: SITE_URL,
+        inLanguage: 'ko-KR',
+        publisher: {
+          '@id': AUTHOR_ID,
+        },
+      },
+      {
+        '@type': 'Person',
+        '@id': AUTHOR_ID,
+        name: 'Yongjin Cho',
+        url: 'https://zerry.co.kr',
+        sameAs: ['https://github.com/ongjin'],
+      },
+      {
+        '@type': ['SoftwareApplication', 'WebApplication'],
+        '@id': SOFTWARE_ID,
+        name: SOFTWARE_NAME,
+        alternateName: ['가루', 'Garu', 'garu-ko'],
+        description: DESCRIPTION,
+        url: SITE_URL,
+        image: `${SITE_URL}/og-image.png`,
+        mainEntityOfPage: {
+          '@id': WEBSITE_ID,
+        },
+        isPartOf: {
+          '@id': WEBSITE_ID,
+        },
+        inLanguage: 'ko-KR',
+        applicationCategory: 'DeveloperApplication',
+        applicationSubCategory: 'Korean NLP',
+        operatingSystem: 'Web Browser',
+        browserRequirements: 'Requires WebAssembly support',
+        softwareRequirements: 'Modern web browser with WebAssembly support',
+        memoryRequirements: '1.7MB model and 93KB WASM engine',
+        isAccessibleForFree: true,
+        offers: {
+          '@type': 'Offer',
+          price: 0,
+          priceCurrency: 'USD',
+        },
+        author: {
+          '@id': AUTHOR_ID,
+        },
+        publisher: {
+          '@id': AUTHOR_ID,
+        },
+        softwareVersion: SOFTWARE_VERSION,
+        programmingLanguage: ['TypeScript', 'Rust', 'WebAssembly'],
+        downloadUrl: 'https://www.npmjs.com/package/garu-ko',
+        installUrl: 'https://www.npmjs.com/package/garu-ko',
+        codeRepository: 'https://github.com/ongjin/garu',
+        license: 'https://github.com/ongjin/garu/blob/main/LICENSE',
+        releaseNotes: 'https://github.com/ongjin/garu/releases/tag/v0.9.0',
+        softwareHelp: 'https://github.com/ongjin/garu#readme',
+        bugReport: 'https://github.com/ongjin/garu/issues',
+        featureList: [
+          '한국어 형태소 분석',
+          '세종 품사 태깅',
+          '명사 추출',
+          '한국어 토큰화',
+          '브라우저 WASM 실행',
+        ],
+        sameAs: SAME_AS,
+        keywords:
+          '한국어 형태소 분석기, 형태소 분석, 한국어 형태소, 한글 형태소, Korean morphological analyzer, NLP, 자연어처리',
+      },
+    ],
   };
 
   return (
@@ -138,7 +201,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeScript />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+          }}
         />
       </head>
       <body

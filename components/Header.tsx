@@ -17,17 +17,19 @@ export default function Header({ loading, modelInfo, latestVersion }: HeaderProp
         <Logo size={64} />
 
         <h1
-          className="mt-4 text-4xl font-bold tracking-tight"
-          style={{ fontFamily: 'var(--font-outfit), sans-serif' }}
+          className="mt-4 text-center text-3xl font-bold tracking-tight sm:text-4xl"
+          style={{ fontFamily: 'var(--font-noto-kr), sans-serif' }}
         >
           <span className="bg-gradient-to-r from-[var(--accent)] to-[var(--accent-text)] bg-clip-text text-transparent">
-            가루
+            한국어 형태소 분석기
           </span>
-          <span className="text-muted ml-2 text-2xl font-normal">Garu</span>
+          <span className="mt-1 block text-2xl text-foreground sm:text-3xl">
+            가루<span className="ml-1 font-normal text-muted">(Garu)</span>
+          </span>
         </h1>
 
-        <p className="mt-2 text-muted text-sm tracking-wide">
-          Browser-native Korean morphological analyzer
+        <p className="mt-2 text-center text-sm text-muted">
+          브라우저에서 바로 실행되는 WASM 기반 형태소 분석기
         </p>
 
         <div className="mt-4 flex justify-center gap-2 flex-wrap">
