@@ -11,12 +11,43 @@ import SeoContent from '@/components/SeoContent';
 import ExampleSidebar from '@/components/ExampleSidebar';
 import { loadGaru } from '@/lib/garu/loadGaru';
 
+function buildReportUrl(
+  version: string,
+  input: string,
+  tokens: Token[],
+  elapsed: number,
+) {
+  const escape = (s: string) => s.replace(/\|/g, '\\|');
+  const rows = tokens
+    .map((t) => `| ${escape(t.text)} | \`${t.pos}\` |`)
+    .join('\n');
+  const title = `[분석 오류] ${input}`;
+  const body = [
+    `> ${input}`,
+    ``,
+    `#### 무엇이 잘못되었나요?`,
+    `<!-- 어떤 형태소/품사가 어떻게 나와야 하는지 적어주세요 -->`,
+    ``,
+    ``,
+    `#### 현재 분석 결과`,
+    ``,
+    `| 형태소 | 품사 |`,
+    `| --- | --- |`,
+    rows,
+    ``,
+    `---`,
+    `<sub>garu-ko \`${version}\` · ${elapsed.toFixed(2)}ms</sub>`,
+  ].join('\n');
+  return `https://github.com/ongjin/garu/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+
 export default function Home() {
   const garuRef = useRef<Garu | null>(null);
   const [loading, setLoading] = useState(true);
   const [modelInfo, setModelInfo] = useState<ModelInfo | undefined>();
 
   const [text, setText] = useState('');
+  const [analyzedText, setAnalyzedText] = useState('');
   const [analyzeTokens, setAnalyzeTokens] = useState<Token[]>([]);
   const [nouns, setNouns] = useState<string[]>([]);
   const [tokenizeTokens, setTokenizeTokens] = useState<string[]>([]);
@@ -55,6 +86,7 @@ export default function Home() {
         const result = garu.analyze(input) as AnalyzeResult;
         setAnalyzeTokens(result.tokens);
         setElapsed(result.elapsed);
+        setAnalyzedText(input);
 
         const nounTags = new Set(['NNG', 'NNP']);
         if (sl) nounTags.add('SL');
@@ -109,6 +141,16 @@ export default function Home() {
           loading={loading}
           analyzing={analyzing}
           elapsed={elapsed}
+          reportUrl={
+            analyzeTokens.length > 0 && modelInfo && elapsed !== null
+              ? buildReportUrl(
+                  modelInfo.version,
+                  analyzedText,
+                  analyzeTokens,
+                  elapsed,
+                )
+              : undefined
+          }
         />
         <ResultTabs
           analyzeTokens={analyzeTokens}
