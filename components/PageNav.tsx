@@ -8,6 +8,7 @@ import { preloadSearchIndexes } from '@/lib/search/searchIndexCache';
 
 const LINKS = [
   { href: '/', label: '형태소' },
+  { href: '/use-cases', label: '활용사례' },
   { href: '/minisearch', label: 'MiniSearch' },
   { href: '/orama', label: 'Orama' },
 ];

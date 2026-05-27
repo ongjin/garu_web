@@ -1,3 +1,5 @@
+import { FAQ_ITEMS } from '@/lib/faq';
+
 export default function SeoContent() {
   return (
     <article className="mt-16 space-y-12 text-sm text-muted leading-relaxed">
@@ -10,7 +12,8 @@ export default function SeoContent() {
           가루(Garu)는 브라우저에서 바로 실행되는 <strong>한국어 형태소 분석기</strong>입니다.
           별도의 서버 없이 WebAssembly(WASM) 기반으로 클라이언트에서 직접{' '}
           <strong>형태소 분석</strong>, <strong>명사 추출</strong>, <strong>토큰화</strong>를
-          수행합니다. 1.7MB의 경량 모델과 93KB WASM 엔진만으로 F1 95.3%의 높은 정확도를 달성합니다.
+          수행합니다. 1.0MB의 경량 모델과 155KB(gzip) WASM 엔진만으로 NIKL MP 벤치마크 기준
+          F1 93.7%의 정확도를 달성합니다.
         </p>
       </section>
 
@@ -53,47 +56,50 @@ export default function SeoContent() {
         </dl>
       </section>
 
-      {/* 다른 분석기와 비교 */}
+      {/* 왜 가루(Garu)인가 */}
       <section>
         <h2 className="text-lg font-semibold text-foreground mb-3">
-          다른 한국어 형태소 분석기와 비교
+          왜 가루(Garu)인가?
         </h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-border text-xs uppercase tracking-wider text-muted">
-                <th className="py-2 pr-4 font-medium">분석기</th>
-                <th className="py-2 pr-4 font-medium">모델 크기</th>
-                <th className="py-2 pr-4 font-medium">npm 패키지</th>
-                <th className="py-2 pr-4 font-medium">브라우저</th>
-                <th className="py-2 font-medium">F1 (NIKL)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-border">
-                <td className="py-2 pr-4 font-medium text-foreground">가루 (Garu)</td>
-                <td className="py-2 pr-4">1.7MB</td>
-                <td className="py-2 pr-4">O</td>
-                <td className="py-2 pr-4">O</td>
-                <td className="py-2 font-medium text-[var(--accent-text)]">95.3%</td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="py-2 pr-4 text-foreground">Kiwi</td>
-                <td className="py-2 pr-4">~40MB</td>
-                <td className="py-2 pr-4">X</td>
-                <td className="py-2 pr-4">X</td>
-                <td className="py-2">87.9%</td>
-              </tr>
-              <tr className="border-b border-border">
-                <td className="py-2 pr-4 text-foreground">MeCab-ko</td>
-                <td className="py-2 pr-4">~50MB</td>
-                <td className="py-2 pr-4">X</td>
-                <td className="py-2 pr-4">X</td>
-                <td className="py-2">~85%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <dl className="space-y-3">
+          <div>
+            <dt className="font-medium text-foreground">서버 없이 브라우저에서 직접 실행</dt>
+            <dd>
+              WebAssembly 기반으로 100% 클라이언트에서 동작합니다. 별도의 분석 서버를 띄울
+              필요가 없고, 사용자 텍스트가 외부로 전송되지 않아 개인정보 보호에 강합니다.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">초경량 1MB 모델 + 155KB 엔진</dt>
+            <dd>
+              brotli 압축된 1.0MB 코드북 모델과 155KB(gzip) WASM 엔진. 모바일 웹에서도
+              부담 없이 로드할 수 있는 한국어 NLP 자원입니다.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">npm 한 줄 설치, 0-config</dt>
+            <dd>
+              <code className="rounded bg-surface px-1.5 py-0.5 text-xs">npm install garu-ko</code>{' '}
+              한 줄이면 끝. 별도의 모델 다운로드, 네이티브 바인딩, Python 런타임이 필요 없습니다.
+              Next.js / Vite / 순수 브라우저 어디서나 동작합니다.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">NIKL MP F1 93.7% 정확도</dt>
+            <dd>
+              국립국어원 NIKL Modu Corpus 형태분석 말뭉치 기준 F1 93.7%, 9,000문장 v15k
+              골드 테스트셋 기준 F1 93.3%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리
+              규칙 조합으로 경량 환경에서 높은 정확도를 유지합니다.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-medium text-foreground">오프라인 동작</dt>
+            <dd>
+              초기 로드 이후 네트워크 없이 동작합니다. 브라우저 확장, 오프라인 PWA, 임베디드
+              에디터 등 인터넷에 의존할 수 없는 환경에 적합합니다.
+            </dd>
+          </div>
+        </dl>
       </section>
 
       {/* 사용법 */}
@@ -125,6 +131,21 @@ console.log(result.tokens);`}</code>
           <li>교육 도구 — 한국어 문법 학습 및 품사 분석 실습</li>
           <li>브라우저 확장 프로그램 — 서버 없이 실시간 텍스트 분석</li>
         </ul>
+      </section>
+
+      {/* 자주 묻는 질문 */}
+      <section>
+        <h2 className="text-lg font-semibold text-foreground mb-3">
+          자주 묻는 질문 (FAQ)
+        </h2>
+        <dl className="space-y-4">
+          {FAQ_ITEMS.map((item) => (
+            <div key={item.question}>
+              <dt className="font-medium text-foreground">{item.question}</dt>
+              <dd className="mt-1">{item.answer}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
     </article>
   );

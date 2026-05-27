@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Outfit, Noto_Sans_KR, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeScript } from '@/components/ThemeScript';
+import { FAQ_ITEMS } from '@/lib/faq';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -27,8 +28,8 @@ const SOFTWARE_NAME = '한국어 형태소 분석기 가루(Garu)';
 const TITLE =
   '한국어 형태소 분석기 가루(Garu) - 브라우저에서 바로 실행되는 WASM 분석기';
 const DESCRIPTION =
-  '한국어 형태소 분석기 가루(Garu)는 브라우저에서 바로 실행되는 WASM 기반 분석기입니다. 1.7MB 경량 모델, 93KB WASM, F1 95.3% 정확도. 서버 없이 100% 클라이언트에서 형태소 분석, 명사 추출, 토큰화를 수행합니다. npm install garu-ko';
-const SOFTWARE_VERSION = '0.9.0';
+  '한국어 형태소 분석기 가루(Garu)는 브라우저에서 바로 실행되는 WASM 기반 분석기입니다. 1.0MB 경량 모델, 155KB WASM(gzip), F1 93.7%(NIKL MP). 서버 없이 100% 클라이언트에서 형태소 분석, 명사 추출, 토큰화를 수행합니다. npm install garu-ko';
+const SOFTWARE_VERSION = '0.9.1';
 const SAME_AS = [
   'https://github.com/ongjin/garu',
   'https://www.npmjs.com/package/garu-ko',
@@ -37,6 +38,7 @@ const SAME_AS = [
 const AUTHOR_ID = 'https://zerry.co.kr/#person';
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const SOFTWARE_ID = `${SITE_URL}/#software`;
+const FAQ_ID = `${SITE_URL}/#faq`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -159,7 +161,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         operatingSystem: 'Web Browser',
         browserRequirements: 'Requires WebAssembly support',
         softwareRequirements: 'Modern web browser with WebAssembly support',
-        memoryRequirements: '1.7MB model and 93KB WASM engine',
+        memoryRequirements: '1.0MB model and 155KB WASM engine (gzip)',
         isAccessibleForFree: true,
         offers: {
           '@type': 'Offer',
@@ -178,7 +180,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         installUrl: 'https://www.npmjs.com/package/garu-ko',
         codeRepository: 'https://github.com/ongjin/garu',
         license: 'https://github.com/ongjin/garu/blob/main/LICENSE',
-        releaseNotes: 'https://github.com/ongjin/garu/releases/tag/v0.9.0',
+        releaseNotes: `https://github.com/ongjin/garu/releases/tag/v${SOFTWARE_VERSION}`,
         softwareHelp: 'https://github.com/ongjin/garu#readme',
         bugReport: 'https://github.com/ongjin/garu/issues',
         featureList: [
@@ -191,6 +193,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         sameAs: SAME_AS,
         keywords:
           '한국어 형태소 분석기, 형태소 분석, 한국어 형태소, 한글 형태소, Korean morphological analyzer, NLP, 자연어처리',
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': FAQ_ID,
+        url: SITE_URL,
+        inLanguage: 'ko-KR',
+        isPartOf: { '@id': WEBSITE_ID },
+        about: { '@id': SOFTWARE_ID },
+        mainEntity: FAQ_ITEMS.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
       },
     ],
   };

@@ -53,7 +53,7 @@ assert.ok(author.sameAs?.includes('https://github.com/ongjin'));
 
 assert.ok(software, 'JSON-LD should include a SoftwareApplication node');
 assert.deepEqual(software['@type'], ['SoftwareApplication', 'WebApplication']);
-assert.equal(software.softwareVersion, '0.9.0');
+assert.equal(software.softwareVersion, '0.9.1');
 assert.equal(
   software.name,
   '한국어 형태소 분석기 가루(Garu)',
@@ -64,7 +64,7 @@ assert.equal(software.author['@id'], 'https://zerry.co.kr/#person');
 assert.equal(software.offers.price, 0);
 assert.equal(software.offers.priceCurrency, 'USD');
 assert.equal(software.license, 'https://github.com/ongjin/garu/blob/main/LICENSE');
-assert.equal(software.releaseNotes, 'https://github.com/ongjin/garu/releases/tag/v0.9.0');
+assert.equal(software.releaseNotes, 'https://github.com/ongjin/garu/releases/tag/v0.9.1');
 assert.equal(software.softwareHelp, 'https://github.com/ongjin/garu#readme');
 assert.equal(software.bugReport, 'https://github.com/ongjin/garu/issues');
 assert.deepEqual(software.featureList, [
