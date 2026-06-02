@@ -17,13 +17,27 @@ function buildReportUrl(
   tokens: Token[],
   elapsed: number,
 ) {
+  // GitHub는 ~8KB가 넘는 URL을 414로 거부한다. 인코딩된 한글은 글자당 9바이트라
+  // 긴 입력이면 제목·인용·테이블을 잘라 URL을 한계 아래로 유지한다.
+  const BASE = 'https://github.com/ongjin/garu/issues/new';
+  const MAX_URL = 7000;
+  const TITLE_MAX = 50;
+  const QUOTE_MAX = 200;
+
   const escape = (s: string) => s.replace(/\|/g, '\\|');
-  const rows = tokens
-    .map((t) => `| ${escape(t.text)} | \`${t.pos}\` |`)
-    .join('\n');
-  const title = `[분석 오류] ${input}`;
-  const body = [
-    `> ${input}`,
+
+  const title =
+    input.length > TITLE_MAX
+      ? `[분석 오류] ${input.slice(0, TITLE_MAX)}…`
+      : `[분석 오류] ${input}`;
+
+  const quoted =
+    input.length > QUOTE_MAX
+      ? `> ${input.slice(0, QUOTE_MAX)} …(입력 ${input.length}자 중 앞 ${QUOTE_MAX}자)`
+      : `> ${input}`;
+
+  const head = [
+    quoted,
     ``,
     `#### 무엇이 잘못되었나요?`,
     `<!-- 어떤 형태소/품사가 어떻게 나와야 하는지 적어주세요 -->`,
@@ -33,12 +47,35 @@ function buildReportUrl(
     ``,
     `| 형태소 | 품사 |`,
     `| --- | --- |`,
-    rows,
+  ];
+  const foot = [
     ``,
     `---`,
     `<sub>garu-ko \`${version}\` · ${elapsed.toFixed(2)}ms</sub>`,
-  ].join('\n');
-  return `https://github.com/ongjin/garu/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  ];
+
+  // 고정 길이를 제외한 예산만큼만 테이블 행을 채우고, 나머지는 생략 안내한다.
+  const fixedLen =
+    BASE.length +
+    '?title=&body='.length +
+    encodeURIComponent(title).length +
+    encodeURIComponent([...head, ...foot].join('\n')).length;
+
+  const rows: string[] = [];
+  let used = fixedLen;
+  for (const t of tokens) {
+    const row = `| ${escape(t.text)} | \`${t.pos}\` |`;
+    const cost = encodeURIComponent(`${row}\n`).length;
+    if (used + cost > MAX_URL - 120) break; // 생략 안내 줄 여유분 확보
+    rows.push(row);
+    used += cost;
+  }
+  if (rows.length < tokens.length) {
+    rows.push(`| … | 나머지 ${tokens.length - rows.length}개 생략 |`);
+  }
+
+  const body = [...head, ...rows, ...foot].join('\n');
+  return `${BASE}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 }
 
 export default function Home() {
