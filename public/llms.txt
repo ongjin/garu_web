@@ -23,3 +23,6 @@
 ## 통합 패키지
 - [garu-orama-tokenizer](https://www.npmjs.com/package/garu-orama-tokenizer)
 - [garu-minisearch-tokenizer](https://www.npmjs.com/package/garu-minisearch-tokenizer)
+
+## 선택
+- [llms-full.txt](https://garu.zerry.co.kr/llms-full.txt): API·예제·FAQ 전문을 담은 전체 버전

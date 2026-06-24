@@ -1,0 +1,131 @@
+# 가루 (Garu) — 한국어 형태소 분석기
+
+> 1MB 모델과 337KB WASM 엔진만으로 브라우저에서 직접 실행되는 한국어 형태소 분석기.
+> 서버·네트워크 없이 완전 오프라인으로 형태소 분석·품사 태깅·명사 추출·토큰화를 수행한다.
+> npm 패키지명: garu-ko. 라이브 데모/사이트: https://garu.zerry.co.kr
+
+이 문서는 LLM·AI 에이전트가 한 번에 읽도록 가루의 전체 정보를 모은 전문(full) 버전이다.
+
+## 핵심 사실
+
+- 모델 1.0MB(brotli q11 압축), WASM raw 337KB / gzip 155KB. 모델이 npm 패키지에 번들되어 CDN·별도 다운로드 불필요.
+- 정확도: 모두의 말뭉치(NIKL MP) 형태분석 F1 93.7%, v15k 9,000문장 골드 테스트셋 F1 95.1%(ep_norm 정규화).
+- 품사 체계: 국립국어원 세종 품사 태그셋 42종(NNG/NNP/VV/VA/JKS/JKO/EP/EF/EC/SF 등).
+- 파이프라인: 코드북 + 어절 캐시 + 문장 수준 N-best Trigram Viterbi + 결정적 후처리 규칙. 신경망 없음 → 결과가 결정적·재현 가능.
+- 실행 환경: WebAssembly 지원 모던 브라우저, Node.js 18+, Bun, Deno. 모바일 웹 실용적.
+- 라이선스 MIT, 상업적 이용 가능. 소스: https://github.com/ongjin/garu
+
+## 설치
+
+```bash
+npm install garu-ko
+```
+
+## 빠른 시작
+
+```typescript
+import { Garu } from 'garu-ko';
+
+// 모델 로드 (npm 패키지에 포함되어 별도 다운로드 불필요)
+const garu = await Garu.load();
+
+// 형태소 분석
+const result = garu.analyze('배가 아파서 약을 먹었다');
+console.log(result.tokens);
+// [
+//   { text: '배',   pos: 'NNG', start: 0, end: 2 },
+//   { text: '가',   pos: 'JKS', start: 0, end: 2 },
+//   { text: '아프', pos: 'VA',  start: 3, end: 6 },
+//   { text: '어서', pos: 'EC',  start: 3, end: 6 },
+//   ...
+// ]
+
+// 간단 토큰화 (표면형만)
+garu.tokenize('나는 학교에 간다'); // ['나', '는', '학교', '에', '간다']
+
+// 명사만 추출
+garu.nouns('인공지능 기술이 발전했다'); // ['인공', '지능', '기술', '발전']
+
+// 리소스 해제
+garu.destroy();
+```
+
+## API
+
+- `Garu.load(options?): Promise<Garu>` — WASM 초기화 + 모델 로드. `options.modelData`(ArrayBuffer) 또는 `options.modelUrl`(string)로 커스텀 모델 지정 가능. 미지정 시 번들 모델 사용.
+- `garu.analyze(text, options?): AnalyzeResult | AnalyzeResult[]` — 형태소 분석. `options.topN > 1`이면 N-best 배열.
+- `garu.nouns(text, options?): string[]` — 명사(NNG, NNP)만 추출. `options.includeSL`로 외래어 토큰(SL, 예: "AI") 포함.
+- `garu.tokenize(text): string[]` — 표면형 문자열 배열(경량).
+- `garu.modelInfo(): ModelInfo` — 모델 메타데이터 `{ version, size, accuracy }`.
+- `garu.isLoaded(): boolean` — 사용 가능 여부.
+- `garu.destroy(): void` — WASM 인스턴스 해제.
+
+### 출력 형식
+
+```typescript
+interface AnalyzeResult { tokens: Token[]; score: number; elapsed: number; }
+interface Token { text: string; pos: POS; start: number; end: number; } // start/end는 글자 오프셋
+interface ModelInfo { version: string; size: number; accuracy: number; } // accuracy 0.951
+```
+
+## 자주 묻는 질문 (FAQ)
+
+**한국어 형태소 분석기란 무엇인가요?**
+문장을 의미 최소 단위인 형태소로 분리하고 각 형태소에 품사(POS) 태그를 부여하는 NLP 도구. 한국어는 교착어라 어근에 조사·어미가 붙어 단순 공백 분리로 토큰화할 수 없어, 검색·번역·텍스트 마이닝 등에 형태소 분석이 필수다.
+
+**가루(Garu)는 어떻게 브라우저에서 직접 동작하나요?**
+Rust 형태소 분석 엔진을 WebAssembly(WASM)로 컴파일해 실행한다. 1.0MB brotli 코드북 모델과 155KB(gzip) WASM 엔진을 처음 로드한 뒤에는 모든 분석이 사용자 디바이스에서 일어나 서버 통신이 필요 없다.
+
+**어떤 품사 태그 체계를 사용하나요?**
+국립국어원 세종 품사 태그셋(42종)을 그대로 사용한다. 일반명사(NNG)·고유명사(NNP)·동사(VV)·형용사(VA)·조사·어미·기호까지 정밀하게 구분한다.
+
+**오프라인 환경에서도 동작하나요?**
+네. 초기 로드 시에만 모델·WASM을 받고 이후엔 네트워크 없이 동작한다. 서비스 워커와 함께 쓰면 완전 오프라인 PWA, 브라우저 확장, 사내 인트라넷에서도 그대로 활용 가능하다.
+
+**정확도는 어느 정도인가요?**
+NIKL Modu Corpus 형태분석 기준 F1 93.7%, 9,000문장 v15k 골드 테스트셋 기준 F1 95.1%를 달성한다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 조합으로 1MB 모델에서 데스크톱 분석기에 근접한 정확도를 유지한다.
+
+**Node.js 서버나 다른 런타임에서도 사용할 수 있나요?**
+`npm install garu-ko` 한 줄로 브라우저 ESM, Node.js, Bun, Deno에서 동일 API로 동작한다. Next.js App Router 클라이언트 컴포넌트, Vite/SvelteKit, Electron, 서버사이드 분석까지 같은 패키지를 쓴다.
+
+**상업적으로 사용해도 되나요?**
+네. 가루(garu-ko)는 오픈소스이며 MIT 라이선스로 상업적 이용이 허용된다. 별도 라이선스 비용이 없다.
+
+## 통합 패키지 (검색 엔진 한국어 토크나이저)
+
+기본 토크나이저는 `"먹었다"`와 `"먹는다"`를 매치하지 못하고 `"학교"` 검색이 `"학교에/를/가"`를 놓친다. 가루 어댑터는 조사·어미를 떼고 어간만 색인해 활용형이 달라도 같은 단어로 검색된다.
+
+### Orama — garu-orama-tokenizer
+
+```typescript
+import { create, insert, search } from '@orama/orama';
+import { createTokenizer } from 'garu-orama-tokenizer';
+
+const db = await create({
+  schema: { title: 'string', body: 'string' },
+  components: { tokenizer: await createTokenizer() },
+});
+for (const doc of documents) await insert(db, doc);
+const res = await search(db, { term: '먹다' }); // 활용형까지 매칭
+```
+
+### MiniSearch — garu-minisearch-tokenizer
+
+```typescript
+import MiniSearch from 'minisearch';
+import { createTokenizer } from 'garu-minisearch-tokenizer';
+
+const tokenize = await createTokenizer();
+const ms = new MiniSearch({ fields: ['title', 'body'], tokenize });
+ms.addAll(documents);
+const results = ms.search('먹다');
+```
+
+## 링크
+
+- 홈 / 라이브 데모: https://garu.zerry.co.kr
+- 활용 사례: https://garu.zerry.co.kr/use-cases
+- Orama 연동 가이드: https://garu.zerry.co.kr/orama
+- MiniSearch 연동 가이드: https://garu.zerry.co.kr/minisearch
+- npm: https://www.npmjs.com/package/garu-ko
+- GitHub(소스·README·기술 논문): https://github.com/ongjin/garu
