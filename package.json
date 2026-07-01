@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@orama/orama": "^3.1.18",
-    "garu-ko": "^0.9.6",
+    "garu-ko": "^0.9.7",
     "garu-minisearch-tokenizer": "^0.4.0",
     "garu-orama-tokenizer": "^0.4.0",
     "minisearch": "^7.2.0",

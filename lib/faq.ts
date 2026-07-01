@@ -27,7 +27,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: '정확도는 어느 정도인가요?',
     answer:
-      '국립국어원 NIKL Modu Corpus 형태분석 말뭉치 기준 F1 93.7%, 9,000문장 v15k 골드 테스트셋 기준 F1 95.1%를 달성합니다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙을 조합해 1MB 크기 모델에서 데스크톱 분석기 수준에 근접한 정확도를 유지합니다.',
+      '국립국어원 NIKL Modu Corpus 형태분석 말뭉치 기준 F1 93.9%, 9,000문장 v15k 골드 테스트셋 기준 F1 95.3%를 달성합니다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙을 조합해 1MB 크기 모델에서 데스크톱 분석기 수준에 근접한 정확도를 유지합니다.',
   },
   {
     question: 'Node.js 서버나 다른 런타임에서도 사용할 수 있나요?',

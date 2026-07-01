@@ -13,7 +13,7 @@ export default function SeoContent() {
           별도의 서버 없이 WebAssembly(WASM) 기반으로 클라이언트에서 직접{' '}
           <strong>형태소 분석</strong>, <strong>명사 추출</strong>, <strong>토큰화</strong>를
           수행합니다. 1.0MB의 경량 모델과 155KB(gzip) WASM 엔진만으로 NIKL MP 벤치마크 기준
-          F1 93.7%의 정확도를 달성합니다.
+          F1 93.9%의 정확도를 달성합니다.
         </p>
       </section>
 
@@ -85,10 +85,10 @@ export default function SeoContent() {
             </dd>
           </div>
           <div>
-            <dt className="font-medium text-foreground">NIKL MP F1 93.7% 정확도</dt>
+            <dt className="font-medium text-foreground">NIKL MP F1 93.9% 정확도</dt>
             <dd>
-              국립국어원 NIKL Modu Corpus 형태분석 말뭉치 기준 F1 93.7%, 9,000문장 v15k
-              골드 테스트셋 기준 F1 95.1%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리
+              국립국어원 NIKL Modu Corpus 형태분석 말뭉치 기준 F1 93.9%, 9,000문장 v15k
+              골드 테스트셋 기준 F1 95.3%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리
               규칙 조합으로 경량 환경에서 높은 정확도를 유지합니다.
             </dd>
           </div>
