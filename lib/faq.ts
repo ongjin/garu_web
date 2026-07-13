@@ -12,7 +12,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: '가루(Garu)는 어떻게 브라우저에서 직접 동작하나요?',
     answer:
-      '가루는 Rust로 작성된 형태소 분석 엔진을 WebAssembly(WASM)로 컴파일해 브라우저에서 실행합니다. 1.0MB의 brotli 압축 코드북 모델과 155KB(gzip) WASM 엔진을 처음 로드한 뒤에는 모든 분석이 사용자 디바이스에서 일어나므로 별도의 서버 통신이나 백엔드 인프라가 필요 없습니다.',
+      '가루는 Rust로 작성된 형태소 분석 엔진을 WebAssembly(WASM)로 컴파일해 브라우저에서 실행합니다. 1.4MB의 brotli 압축 코드북 모델과 172KB(gzip) WASM 엔진을 처음 로드한 뒤에는 모든 분석이 사용자 디바이스에서 일어나므로 별도의 서버 통신이나 백엔드 인프라가 필요 없습니다.',
   },
   {
     question: '어떤 품사 태그 체계를 사용하나요?',
@@ -27,7 +27,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: '정확도는 어느 정도인가요?',
     answer:
-      '국립국어원 NIKL Modu Corpus 형태분석 말뭉치 기준 F1 93.9%, 9,000문장 v15k 골드 테스트셋 기준 F1 95.4%를 달성합니다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙을 조합해 1MB 크기 모델에서 데스크톱 분석기 수준에 근접한 정확도를 유지합니다.',
+      '9,000문장 v15k 골드 테스트셋 기준 F1 95.7%, 2025 구어 held-out 평가셋 기준 F1 91.0%를 달성합니다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위 perceptron을 조합해 1.4MB 크기 모델에서 데스크톱 분석기 수준에 근접한 정확도를 유지합니다.',
   },
   {
     question: 'Node.js 서버나 다른 런타임에서도 사용할 수 있나요?',
