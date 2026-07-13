@@ -111,7 +111,7 @@ const counts = nouns.reduce<Record<string, number>>((acc, w) => {
     id: 'chatbot',
     title: '챗봇 · 검색 UI 입력 전처리',
     summary:
-      '사용자 입력을 형태소 단위로 정규화하면 동의어/이형태(예: "아파요"·"아픕니다"·"아프다") 매칭이 훨씬 쉬워집니다. 가루는 1MB 모델이라 챗봇 위젯 번들에 함께 실어도 부담이 적습니다.',
+      '사용자 입력을 형태소 단위로 정규화하면 동의어/이형태(예: "아파요"·"아픕니다"·"아프다") 매칭이 훨씬 쉬워집니다. 가루는 1.4MB 모델이라 챗봇 위젯 번들에 함께 실어도 부담이 적습니다.',
     code: `function normalizeIntent(utterance: string) {
   const lemma = garu
     .analyze(utterance)

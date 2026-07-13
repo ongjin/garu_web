@@ -28,8 +28,8 @@ const SOFTWARE_NAME = '한국어 형태소 분석기 가루(Garu)';
 const TITLE =
   '한국어 형태소 분석기 가루(Garu) - 브라우저에서 바로 실행되는 WASM 분석기';
 const DESCRIPTION =
-  '한국어 형태소 분석기 가루(Garu)는 브라우저에서 바로 실행되는 WASM 기반 분석기입니다. 1.0MB 경량 모델, 155KB WASM(gzip), F1 93.9%(NIKL MP). 서버 없이 100% 클라이언트에서 형태소 분석, 명사 추출, 토큰화를 수행합니다. npm install garu-ko';
-const SOFTWARE_VERSION = '0.9.8';
+  '한국어 형태소 분석기 가루(Garu)는 브라우저에서 바로 실행되는 WASM 기반 분석기입니다. 1.4MB 경량 모델, 172KB WASM(gzip), F1 95.7%(v15k 골드 테스트셋). 서버 없이 100% 클라이언트에서 형태소 분석, 명사 추출, 토큰화를 수행합니다. npm install garu-ko';
+const SOFTWARE_VERSION = '0.9.9';
 const SAME_AS = [
   'https://github.com/ongjin/garu',
   'https://www.npmjs.com/package/garu-ko',
@@ -161,7 +161,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         operatingSystem: 'Web Browser',
         browserRequirements: 'Requires WebAssembly support',
         softwareRequirements: 'Modern web browser with WebAssembly support',
-        memoryRequirements: '1.0MB model and 155KB WASM engine (gzip)',
+        memoryRequirements: '1.4MB model and 172KB WASM engine (gzip)',
         isAccessibleForFree: true,
         offers: {
           '@type': 'Offer',
