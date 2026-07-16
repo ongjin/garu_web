@@ -9,7 +9,7 @@
 ## 핵심 사실
 
 - 모델 1.4MB(brotli q11 압축), WASM raw 399KB / gzip 172KB. 모델이 npm 패키지에 번들되어 CDN·별도 다운로드 불필요.
-- 정확도: v15k 9,000문장 골드 테스트셋 F1 95.7%(ep_norm 정규화), 2025 구어 held-out F1 91.0%.
+- 정확도: v15k 9,000문장 골드 테스트셋 F1 95.8%(ep_norm 정규화), 2025 구어 held-out F1 91.0%.
 - 품사 체계: 국립국어원 세종 품사 태그셋 42종(NNG/NNP/VV/VA/JKS/JKO/EP/EF/EC/SF 등).
 - 파이프라인: 코드북 + 어절 캐시 + 문장 수준 N-best Trigram Viterbi + 결정적 후처리 규칙. 신경망 없음 → 결과가 결정적·재현 가능.
 - 실행 환경: WebAssembly 지원 모던 브라우저, Node.js 18+, Bun, Deno. 모바일 웹 실용적.
@@ -83,7 +83,7 @@ Rust 형태소 분석 엔진을 WebAssembly(WASM)로 컴파일해 실행한다. 
 네. 초기 로드 시에만 모델·WASM을 받고 이후엔 네트워크 없이 동작한다. 서비스 워커와 함께 쓰면 완전 오프라인 PWA, 브라우저 확장, 사내 인트라넷에서도 그대로 활용 가능하다.
 
 **정확도는 어느 정도인가요?**
-9,000문장 v15k 골드 테스트셋 기준 F1 95.7%, 2025 구어 held-out 평가셋 기준 F1 91.0%를 달성한다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위 perceptron 조합으로 1.4MB 모델에서 데스크톱 분석기에 근접한 정확도를 유지한다.
+9,000문장 v15k 골드 테스트셋 기준 F1 95.8%, 2025 구어 held-out 평가셋 기준 F1 91.0%를 달성한다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위 perceptron 조합으로 1.4MB 모델에서 데스크톱 분석기에 근접한 정확도를 유지한다.
 
 **Node.js 서버나 다른 런타임에서도 사용할 수 있나요?**
 `npm install garu-ko` 한 줄로 브라우저 ESM, Node.js, Bun, Deno에서 동일 API로 동작한다. Next.js App Router 클라이언트 컴포넌트, Vite/SvelteKit, Electron, 서버사이드 분석까지 같은 패키지를 쓴다.

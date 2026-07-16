@@ -27,7 +27,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: '정확도는 어느 정도인가요?',
     answer:
-      '9,000문장 v15k 골드 테스트셋 기준 F1 95.7%, 2025 구어 held-out 평가셋 기준 F1 91.0%를 달성합니다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위 perceptron을 조합해 1.4MB 크기 모델에서 데스크톱 분석기 수준에 근접한 정확도를 유지합니다.',
+      '9,000문장 v15k 골드 테스트셋 기준 F1 95.8%, 2025 구어 held-out 평가셋 기준 F1 91.0%를 달성합니다. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위 perceptron을 조합해 1.4MB 크기 모델에서 데스크톱 분석기 수준에 근접한 정확도를 유지합니다.',
   },
   {
     question: 'Node.js 서버나 다른 런타임에서도 사용할 수 있나요?',
