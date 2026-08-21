@@ -29,7 +29,7 @@ const TITLE =
   '한국어 형태소 분석기 가루(Garu) - 브라우저에서 바로 실행되는 WASM 분석기';
 const DESCRIPTION =
   '한국어 형태소 분석기 가루(Garu)는 브라우저에서 바로 실행되는 WASM 기반 분석기입니다. 1.2MB 경량 모델, 176KB WASM(gzip), F1 96.0%(v15k 골드 테스트셋). 서버 없이 100% 클라이언트에서 형태소 분석, 명사 추출, 토큰화를 수행합니다. npm install garu-ko';
-const SOFTWARE_VERSION = '0.9.15';
+const SOFTWARE_VERSION = '0.9.16';
 const SAME_AS = [
   'https://github.com/ongjin/garu',
   'https://www.npmjs.com/package/garu-ko',
