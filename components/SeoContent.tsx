@@ -88,7 +88,7 @@ export default function SeoContent() {
             <dt className="font-medium text-foreground">골드 테스트셋 F1 96.0% 정확도</dt>
             <dd>
               9,000문장 v15k 골드 테스트셋 기준 F1 96.0%, 2025 구어 held-out 평가셋 기준
-              F1 91.1%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위
+              F1 91.2%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위
               perceptron 조합으로 경량 환경에서 높은 정확도를 유지합니다.
             </dd>
           </div>
