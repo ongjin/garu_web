@@ -1,20 +1,28 @@
 # 가루 (Garu)
 
-> 1.2MB 모델과 412KB WASM 엔진만으로 브라우저에서 직접 실행되는 한국어 형태소 분석기.
-> 서버·네트워크 없이 완전 오프라인으로 형태소 분석·품사 태깅·명사 추출·토큰화를 수행한다. npm: garu-ko.
+> 1.26MB 모델과 425KB WASM 엔진만으로 브라우저에서 직접 실행되는 한국어 형태소 분석기.
+> 필요한 모듈을 로드한 뒤에는 네트워크 없이 형태소 분석·품사 태깅·명사 추출·토큰화를 수행한다. npm: garu-ko.
 
 ## 핵심 사실
-- 모델 1.2MB(brotli), WASM raw 412KB / gzip 176KB, npm 패키지에 번들(CDN 불필요)
-- 정확도: v15k 9,000문장 골드 테스트셋 F1 96.0%(ep_norm 정규화), 2025 구어 held-out F1 91.2%
+
+- 본체 garu-ko 0.10.0, Orama·MiniSearch 통합 패키지 0.5.0
+- 정확도 수치는 연구 과정에서 참조한 고정 평가셋의 결과이며 미열람 일반화 성능을 뜻하지 않는다.
+- 모델 1.26MB(brotli), WASM raw 425KB / gzip 182KB, npm 패키지에 번들(CDN 불필요)
+- 정확도: v15k 9,000문장 골드 테스트셋 F1 96.05%(ep_norm 정규화), 2025 구어 고정 평가 F1 91.23%
 - 세종 품사 태그셋 42종
-- 결정적 파이프라인(신경망 없음): 코드북 + 어절 캐시 + 문장 N-best Trigram Viterbi + 후처리 규칙
-- 라이선스 MIT, 상업적 이용 가능
+- 기본 형태소 파이프라인: 코드북 + 어절 캐시 + 문장 N-best Trigram Viterbi + 후처리 규칙 + 재순위 perceptron + 문맥 POS 교정
+- 엔진 코드는 MIT이며, 포함된 사전 데이터는 Apache-2.0·CC BY-SA 2.0 KR 등 공급원별 출처 표시·재배포 조건을 따른다.
+
+- 문장 분리·공백 복원: `garu-ko/sentences`의 `splitSentences(text)`, `garu-ko/text`의 `restoreSpacing(text)`. 기본 형태소 분석에는 자동 적용하지 않는다.
 
 ## 문서
 - [홈 / 라이브 데모](https://garu.zerry.co.kr): 브라우저에서 바로 형태소 분석 체험
 - [활용 사례](https://garu.zerry.co.kr/use-cases): 검색 색인·명사 추출 등 적용 예시
 - [Orama 검색 연동](https://garu.zerry.co.kr/orama): Orama 검색 엔진용 한국어 토크나이저
 - [MiniSearch 검색 연동](https://garu.zerry.co.kr/minisearch): MiniSearch 검색 엔진용 한국어 토크나이저
+
+- [패키지 라이선스](https://github.com/ongjin/garu/blob/v0.10.0/js/LICENSE)
+- [사전 데이터 고지](https://github.com/ongjin/garu/blob/v0.10.0/js/models/NOTICE.md)
 
 ## 설치 / 소스
 - [npm: garu-ko](https://www.npmjs.com/package/garu-ko): `npm install garu-ko`

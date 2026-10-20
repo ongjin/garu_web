@@ -6,6 +6,15 @@ export interface ExampleCategory {
 
 export const EXAMPLE_CATEGORIES: ExampleCategory[] = [
   {
+    name: '문장·공백',
+    icon: '↔',
+    examples: [
+      '안녕하세요반갑습니다',
+      '나는학교에갔다',
+      '“안녕하세요반갑습니다”',
+    ],
+  },
+  {
     name: '일상 대화',
     icon: '💬',
     examples: [

@@ -47,10 +47,10 @@ export default function Header({ loading, modelInfo, latestVersion }: HeaderProp
                 <span className="text-[var(--accent-text)] font-medium">v{modelInfo.version}</span>
               </span>
               <span className="rounded-full border border-border bg-surface px-3 py-1 text-sm text-muted animate-fade-in-up animate-stagger-2 opacity-0">
-                <span className="font-medium">{(modelInfo.size / 1024 / 1024).toFixed(1)}</span>MB
+                <span className="font-medium">{(modelInfo.size / 1_000_000).toFixed(2)}</span>MB
               </span>
               <span className="rounded-full border border-border bg-surface px-3 py-1 text-sm text-muted animate-fade-in-up animate-stagger-3 opacity-0">
-                F1 <span className="text-[var(--accent-text)] font-medium">{(modelInfo.accuracy * 100).toFixed(1)}%</span>
+                F1 <span className="text-[var(--accent-text)] font-medium">{(modelInfo.accuracy * 100).toFixed(2)}%</span>
               </span>
             </>
           ) : null}

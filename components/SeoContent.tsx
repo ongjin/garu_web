@@ -12,8 +12,8 @@ export default function SeoContent() {
           가루(Garu)는 브라우저에서 바로 실행되는 <strong>한국어 형태소 분석기</strong>입니다.
           별도의 서버 없이 WebAssembly(WASM) 기반으로 클라이언트에서 직접{' '}
           <strong>형태소 분석</strong>, <strong>명사 추출</strong>, <strong>토큰화</strong>를
-          수행합니다. 1.2MB의 경량 모델과 176KB(gzip) WASM 엔진만으로 9,000문장 v15k 골드
-          테스트셋 기준 F1 96.0%의 정확도를 달성합니다.
+          수행합니다. 1.26MB의 경량 모델과 182KB(gzip) WASM 엔진만으로 9,000문장 v15k 골드
+          테스트셋 기준 F1 96.05%의 정확도를 달성합니다.
         </p>
       </section>
 
@@ -53,6 +53,13 @@ export default function SeoContent() {
             <dt className="font-medium text-foreground">토큰화 (Tokenization)</dt>
             <dd>텍스트를 의미 있는 토큰 단위로 분리하여 후속 NLP 파이프라인에 활용할 수 있습니다.</dd>
           </div>
+          <div>
+            <dt className="font-medium text-foreground">문장 분리·공백 복원</dt>
+            <dd>
+              붙어 있는 문장의 경계를 추정하고 빠진 공백을 복원합니다. 결과 화면의 문장·공백
+              탭에서 확인할 수 있으며, 문장 분리는 짝이 맞는 인용문 내부를 하나로 보존합니다.
+            </dd>
+          </div>
         </dl>
       </section>
 
@@ -70,9 +77,9 @@ export default function SeoContent() {
             </dd>
           </div>
           <div>
-            <dt className="font-medium text-foreground">초경량 1.2MB 모델 + 176KB 엔진</dt>
+            <dt className="font-medium text-foreground">초경량 1.26MB 모델 + 182KB 엔진</dt>
             <dd>
-              brotli 압축된 1.2MB 코드북 모델과 176KB(gzip) WASM 엔진. 모바일 웹에서도
+              brotli 압축된 1.26MB 코드북 모델과 182KB(gzip) WASM 엔진. 모바일 웹에서도
               부담 없이 로드할 수 있는 한국어 NLP 자원입니다.
             </dd>
           </div>
@@ -85,17 +92,17 @@ export default function SeoContent() {
             </dd>
           </div>
           <div>
-            <dt className="font-medium text-foreground">골드 테스트셋 F1 96.0% 정확도</dt>
+            <dt className="font-medium text-foreground">골드 테스트셋 F1 96.05% 정확도</dt>
             <dd>
-              9,000문장 v15k 골드 테스트셋 기준 F1 96.0%, 2025 구어 held-out 평가셋 기준
-              F1 91.2%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위
+              9,000문장 v15k 골드 테스트셋 기준 F1 96.05%, 2025 구어 고정 평가셋 기준
+              F1 91.23%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위
               perceptron 조합으로 경량 환경에서 높은 정확도를 유지합니다.
             </dd>
           </div>
           <div>
             <dt className="font-medium text-foreground">오프라인 동작</dt>
             <dd>
-              초기 로드 이후 네트워크 없이 동작합니다. 브라우저 확장, 오프라인 PWA, 임베디드
+              각 기능의 모듈을 한 번 불러온 뒤에는 네트워크 없이 동작합니다. 브라우저 확장, 오프라인 PWA, 임베디드
               에디터 등 인터넷에 의존할 수 없는 환경에 적합합니다.
             </dd>
           </div>
@@ -118,6 +125,27 @@ const garu = await Garu.load();
 const result = garu.analyze('한국어 형태소 분석기');
 console.log(result.tokens);`}</code>
         </pre>
+        <pre
+          className="mt-3 rounded-lg border border-border bg-surface p-4 overflow-x-auto"
+          style={{ fontFamily: 'var(--font-mono), monospace' }}
+        >
+          <code>{`import { splitSentences } from 'garu-ko/sentences';
+import { restoreSpacing } from 'garu-ko/text';
+
+splitSentences('안녕하세요반갑습니다');
+// [{ text: '안녕하세요', offset: 0 }, { text: '반갑습니다', offset: 5 }]
+restoreSpacing('나는학교에갔다');
+// '나는 학교에 갔다'`}</code>
+        </pre>
+        <p className="mt-2">
+          문장 분리 연구에서는 고정 뉴스 9,355문단의 공백 삭제/공백·종결부호 삭제 조건에서
+          경계 F1 95.91%/96.28%를 기록했습니다. Apple M4의 로드 후 평균은
+          Node 0.020ms·Chrome 0.018ms였습니다. 이는 평균 82.5문자인 1,250입력의 표본
+          측정이며 초기 로딩 비용과 구분됩니다.{' '}
+          <a className="underline underline-offset-4" href="https://github.com/ongjin/garu/blob/v0.10.0/docs/wiki/research-history.md">
+            측정 조건과 한계
+          </a>
+        </p>
       </section>
 
       {/* 활용 분야 */}

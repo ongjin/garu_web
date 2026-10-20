@@ -38,7 +38,7 @@ export default function InputSection({
         />
       </div>
 
-      <div className="mt-3 flex items-center justify-end gap-3">
+      <div className="mt-3 flex flex-wrap items-center justify-end gap-3">
         {elapsed !== null && !analyzing && (
           <div className="flex items-center gap-2">
             {reportUrl && (
@@ -47,7 +47,7 @@ export default function InputSection({
                   href={reportUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="focus-ring inline-flex items-center gap-1.5 rounded-md text-xs text-muted hover:text-[var(--accent-text)] transition-colors"
+                  className="focus-ring inline-flex items-center gap-1.5 whitespace-nowrap rounded-md text-xs text-muted hover:text-[var(--accent-text)] transition-colors"
                   title="GitHub에서 분석 오류 제보하기"
                 >
                   <svg
@@ -65,15 +65,15 @@ export default function InputSection({
               </>
             )}
             <span
-              className="text-xs text-muted tabular-nums"
+              className="whitespace-nowrap text-xs text-muted tabular-nums"
               style={{ fontFamily: 'var(--font-mono), monospace' }}
             >
-              {elapsed.toFixed(2)}ms
+              형태소 분석 {elapsed.toFixed(2)}ms
             </span>
           </div>
         )}
         <button
-          className="focus-ring rounded-xl bg-[var(--accent)] px-6 py-2.5 text-sm font-semibold text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:hover:brightness-100 disabled:cursor-wait transition-all duration-200 flex items-center gap-2"
+          className="focus-ring shrink-0 whitespace-nowrap rounded-xl bg-[var(--accent)] px-6 py-2.5 text-sm font-semibold text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:hover:brightness-100 disabled:cursor-wait transition-all duration-200 flex items-center gap-2"
           onClick={onAnalyze}
           disabled={disabled}
         >

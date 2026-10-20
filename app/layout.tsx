@@ -28,8 +28,8 @@ const SOFTWARE_NAME = '한국어 형태소 분석기 가루(Garu)';
 const TITLE =
   '한국어 형태소 분석기 가루(Garu) - 브라우저에서 바로 실행되는 WASM 분석기';
 const DESCRIPTION =
-  '한국어 형태소 분석기 가루(Garu)는 브라우저에서 바로 실행되는 WASM 기반 분석기입니다. 1.2MB 경량 모델, 176KB WASM(gzip), F1 96.0%(v15k 골드 테스트셋). 서버 없이 100% 클라이언트에서 형태소 분석, 명사 추출, 토큰화를 수행합니다. npm install garu-ko';
-const SOFTWARE_VERSION = '0.9.17';
+  '한국어 형태소 분석기 가루(Garu)는 브라우저에서 바로 실행되는 WASM 기반 분석기입니다. 1.26MB 경량 모델, 182KB WASM(gzip), F1 96.05%(v15k 골드 테스트셋). 서버 없이 형태소 분석, 명사 추출, 토큰화, 문장 분리와 공백 복원을 수행합니다. npm install garu-ko';
+const SOFTWARE_VERSION = '0.10.0';
 const SAME_AS = [
   'https://github.com/ongjin/garu',
   'https://www.npmjs.com/package/garu-ko',
@@ -161,7 +161,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         operatingSystem: 'Web Browser',
         browserRequirements: 'Requires WebAssembly support',
         softwareRequirements: 'Modern web browser with WebAssembly support',
-        memoryRequirements: '1.2MB model and 176KB WASM engine (gzip)',
         isAccessibleForFree: true,
         offers: {
           '@type': 'Offer',
@@ -179,7 +178,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         downloadUrl: 'https://www.npmjs.com/package/garu-ko',
         installUrl: 'https://www.npmjs.com/package/garu-ko',
         codeRepository: 'https://github.com/ongjin/garu',
-        license: 'https://github.com/ongjin/garu/blob/main/LICENSE',
+        license: `https://github.com/ongjin/garu/blob/v${SOFTWARE_VERSION}/js/LICENSE`,
         releaseNotes: `https://github.com/ongjin/garu/releases/tag/v${SOFTWARE_VERSION}`,
         softwareHelp: 'https://github.com/ongjin/garu#readme',
         bugReport: 'https://github.com/ongjin/garu/issues',
@@ -188,6 +187,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           '세종 품사 태깅',
           '명사 추출',
           '한국어 토큰화',
+          '문장 분리',
+          '띄어쓰기 복원',
           '브라우저 WASM 실행',
         ],
         sameAs: SAME_AS,

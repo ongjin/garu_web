@@ -190,6 +190,7 @@ export default function Home() {
           }
         />
         <ResultTabs
+          text={analyzedText}
           analyzeTokens={analyzeTokens}
           nouns={nouns}
           tokenizeTokens={tokenizeTokens}

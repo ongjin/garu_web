@@ -1,7 +1,14 @@
+'use client';
+
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import AnalyzeTab from './AnalyzeTab';
 import NounsTab from './NounsTab';
 import TokenizeTab from './TokenizeTab';
+
+const BoundaryTab = dynamic(() => import('./BoundaryTab'), {
+  loading: () => <p className="py-8 text-center text-sm text-muted">문장·공백 기능을 불러오는 중입니다...</p>,
+});
 
 interface Token {
   text: string;
@@ -11,6 +18,7 @@ interface Token {
 }
 
 interface ResultTabsProps {
+  text: string;
   analyzeTokens: Token[];
   nouns: string[];
   tokenizeTokens: string[];
@@ -22,9 +30,11 @@ const TABS = [
   { label: '형태소 분석', icon: 'M' },
   { label: '명사 추출', icon: 'N' },
   { label: '토큰화', icon: 'T' },
+  { label: '문장·공백', icon: 'S' },
 ] as const;
 
 export default function ResultTabs({
+  text,
   analyzeTokens,
   nouns,
   tokenizeTokens,
@@ -37,7 +47,7 @@ export default function ResultTabs({
     <section className="mt-8 animate-fade-in-up animate-stagger-3 opacity-0">
       <div className="card overflow-hidden">
         {/* Tab bar */}
-        <div className="flex border-b border-border">
+        <div className="grid grid-cols-2 border-b border-border sm:flex">
           {TABS.map((tab, i) => (
             <button
               key={tab.label}
@@ -75,6 +85,7 @@ export default function ResultTabs({
             <NounsTab nouns={nouns} includeSL={includeSL} onToggleSL={onToggleSL} />
           )}
           {active === 2 && <TokenizeTab tokens={tokenizeTokens} />}
+          {active === 3 && <BoundaryTab text={text} />}
         </div>
       </div>
     </section>
