@@ -8,7 +8,7 @@
 
 ## 핵심 사실
 
-- 본체 garu-ko 0.10.0, Orama·MiniSearch 통합 패키지 0.5.0
+- 본체 garu-ko 0.11.0, Orama·MiniSearch 통합 패키지 0.6.0
 - 정확도 수치는 연구 과정에서 참조한 고정 평가셋의 결과이며 미열람 일반화 성능을 뜻하지 않는다.
 
 - 모델 1.26MB(brotli q11 압축), WASM raw 425KB / gzip 182KB. 모델이 npm 패키지에 번들되어 CDN·별도 다운로드 불필요.
@@ -16,10 +16,11 @@
 - 품사 체계: 국립국어원 세종 품사 태그셋 42종(NNG/NNP/VV/VA/JKS/JKO/EP/EF/EC/SF 등).
 - 기본 형태소 파이프라인: 코드북 + 어절 캐시 + 문장 수준 N-best Trigram Viterbi + 후처리 규칙 + 재순위 perceptron + 문맥 POS 교정. 선택형 문장 분리 API는 별도의 작은 Q4 검증기를 사용한다.
 - 실행 환경: WebAssembly 지원 모던 브라우저, Node.js 18+, Bun, Deno. 모바일 웹 실용적.
-- 엔진 코드는 MIT이며, 포함된 사전 데이터는 Apache-2.0·CC BY-SA 2.0 KR 등 공급원별 조건을 따른다. 소스: https://github.com/ongjin/garu
+- 엔진 코드는 Apache-2.0이며, 포함된 사전 데이터는 Apache-2.0·CC BY-SA 2.0 KR 등 공급원별 조건을 따른다. 소스: https://github.com/ongjin/garu
 
-- [패키지 라이선스](https://github.com/ongjin/garu/blob/v0.10.0/js/LICENSE)
-- [사전 데이터 고지](https://github.com/ongjin/garu/blob/v0.10.0/js/models/NOTICE.md)
+- [패키지 라이선스](https://github.com/ongjin/garu/blob/v0.11.0/js/LICENSE)
+- [프로젝트 출처 고지](https://github.com/ongjin/garu/blob/v0.11.0/js/NOTICE)
+- [사전 데이터 고지](https://github.com/ongjin/garu/blob/v0.11.0/js/models/NOTICE.md)
 
 ## 설치
 
@@ -111,7 +112,7 @@ Rust 형태소 분석 엔진을 WebAssembly(WASM)로 컴파일해 실행한다. 
 `npm install garu-ko` 한 줄로 브라우저 ESM, Node.js, Bun, Deno에서 동일 API로 동작한다. Next.js App Router 클라이언트 컴포넌트, Vite/SvelteKit, Electron, 서버사이드 분석까지 같은 패키지를 쓴다.
 
 **상업적으로 사용해도 되나요?**
-엔진 코드는 MIT이며, 포함된 사전 데이터는 Apache-2.0·CC BY-SA 2.0 KR 등 공급원별 출처 표시·재배포 조건을 따른다. 패키지의 LICENSE와 models/NOTICE.md를 확인한다.
+엔진 코드는 Apache-2.0이며, 포함된 사전 데이터는 Apache-2.0·CC BY-SA 2.0 KR 등 공급원별 출처 표시·재배포 조건을 따른다. 패키지의 LICENSE, NOTICE와 models/NOTICE.md를 확인한다.
 
 ## 통합 패키지 (검색 엔진 한국어 토크나이저)
 

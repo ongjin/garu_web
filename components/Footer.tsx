@@ -81,6 +81,17 @@ export default function Footer() {
           <p className="text-xs text-muted">
             100% client-side &middot; no server required
           </p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-muted">
+            <a className="focus-ring underline underline-offset-4" href="/licenses/garu-ko/NOTICE">
+              Garu 출처 고지
+            </a>
+            <a className="focus-ring underline underline-offset-4" href="/licenses/garu-ko/LICENSE">
+              라이선스
+            </a>
+            <a className="focus-ring underline underline-offset-4" href="/licenses/garu-ko/models/NOTICE.md">
+              사전 데이터 고지
+            </a>
+          </div>
         </div>
       </div>
     </footer>

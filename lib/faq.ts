@@ -42,6 +42,6 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: '상업적으로 사용해도 되나요?',
     answer:
-      '엔진 코드는 MIT 라이선스이며, 모델에 포함된 사전 데이터에는 Apache-2.0과 CC BY-SA 2.0 KR 등 공급원별 조건이 적용됩니다. 상업적 이용과 재배포 시에도 해당 출처 표시·라이선스 조건을 따라야 합니다. 패키지의 LICENSE와 models/NOTICE.md에서 데이터별 고지를 확인해 주세요.',
+      '엔진 코드는 Apache-2.0 라이선스이며 상업적 이용이 가능합니다. 모델에 포함된 사전 데이터에는 Apache-2.0과 CC BY-SA 2.0 KR 등 공급원별 조건이 적용됩니다. 재배포 시에도 해당 출처 표시·라이선스 조건을 따라야 합니다. 패키지의 LICENSE, NOTICE와 models/NOTICE.md에서 프로젝트와 데이터별 고지를 확인해 주세요.',
   },
 ];

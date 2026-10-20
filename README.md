@@ -34,5 +34,7 @@ npm run test:seo
 
 검증 후 `main`에 푸시하고 Vercel의 Production deployment 상태 및 실제 사이트의
 버전을 확인합니다. 패키지 코드·사전 데이터의 이용 조건은
-[garu-ko LICENSE](https://github.com/ongjin/garu/blob/v0.10.0/js/LICENSE)와
-[데이터 고지](https://github.com/ongjin/garu/blob/v0.10.0/js/models/NOTICE.md)를 따릅니다.
+[garu-ko LICENSE](https://github.com/ongjin/garu/blob/v0.11.0/js/LICENSE)와
+[데이터 고지](https://github.com/ongjin/garu/blob/v0.11.0/js/models/NOTICE.md)를 따릅니다.
+`public/licenses/`에는 설치한 세 패키지의 LICENSE·NOTICE와 Garu 사전 데이터 고지를
+함께 보관하며, 패키지를 갱신할 때 해당 파일도 맞춥니다.
