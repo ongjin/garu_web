@@ -12,8 +12,8 @@ export default function SeoContent() {
           가루(Garu)는 브라우저에서 바로 실행되는 <strong>한국어 형태소 분석기</strong>입니다.
           별도의 서버 없이 WebAssembly(WASM) 기반으로 클라이언트에서 직접{' '}
           <strong>형태소 분석</strong>, <strong>명사 추출</strong>, <strong>토큰화</strong>를
-          수행합니다. 1.26MB의 경량 모델과 182KB(gzip) WASM 엔진만으로 9,000문장 v15k 골드
-          테스트셋 기준 F1 96.05%의 정확도를 달성합니다.
+          수행합니다. 1.34MB의 경량 모델과 191KB(gzip) WASM 엔진만으로 9,000문장 v15k 골드
+          테스트셋 기준 F1 96.18%의 정확도를 달성합니다.
         </p>
       </section>
 
@@ -77,9 +77,9 @@ export default function SeoContent() {
             </dd>
           </div>
           <div>
-            <dt className="font-medium text-foreground">초경량 1.26MB 모델 + 182KB 엔진</dt>
+            <dt className="font-medium text-foreground">초경량 1.34MB 모델 + 191KB 엔진</dt>
             <dd>
-              brotli 압축된 1.26MB 코드북 모델과 182KB(gzip) WASM 엔진. 모바일 웹에서도
+              brotli 압축된 1.34MB 코드북 모델과 191KB(gzip) WASM 엔진. 모바일 웹에서도
               부담 없이 로드할 수 있는 한국어 NLP 자원입니다.
             </dd>
           </div>
@@ -92,10 +92,10 @@ export default function SeoContent() {
             </dd>
           </div>
           <div>
-            <dt className="font-medium text-foreground">골드 테스트셋 F1 96.05% 정확도</dt>
+            <dt className="font-medium text-foreground">골드 테스트셋 F1 96.18% 정확도</dt>
             <dd>
-              9,000문장 v15k 골드 테스트셋 기준 F1 96.05%, 2025 구어 고정 평가셋 기준
-              F1 91.23%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위
+              9,000문장 v15k 골드 테스트셋 기준 F1 96.18%, 2025 구어 고정 평가셋 기준
+              F1 92.09%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위
               perceptron 조합으로 경량 환경에서 높은 정확도를 유지합니다.
             </dd>
           </div>
