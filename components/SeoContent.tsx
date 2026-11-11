@@ -95,7 +95,7 @@ export default function SeoContent() {
             <dt className="font-medium text-foreground">골드 테스트셋 F1 96.18% 정확도</dt>
             <dd>
               9,000문장 v15k 골드 테스트셋 기준 F1 96.18%, 2025 구어 고정 평가셋 기준
-              F1 92.09%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위
+              F1 92.32%. 코드북 + Trigram Viterbi + 어절 캐시 + 문맥 후처리 규칙 + 재순위
               perceptron 조합으로 경량 환경에서 높은 정확도를 유지합니다.
             </dd>
           </div>
@@ -134,15 +134,18 @@ import { restoreSpacing } from 'garu-ko/text';
 
 splitSentences('안녕하세요반갑습니다');
 // [{ text: '안녕하세요', offset: 0 }, { text: '반갑습니다', offset: 5 }]
+splitSentences('가방에 쏙! 너무 좋아요ㅎㅎ\n다음에 또 살게요');
+// ['가방에 쏙!', '너무 좋아요ㅎㅎ', '다음에 또 살게요'] (text만 표시)
 restoreSpacing('나는학교에갔다');
 // '나는 학교에 갔다'`}</code>
         </pre>
         <p className="mt-2">
-          문장 분리 연구에서는 고정 뉴스 9,355문단의 공백 삭제/공백·종결부호 삭제 조건에서
-          경계 F1 95.91%/96.28%를 기록했습니다. Apple M4의 로드 후 평균은
-          Node 0.020ms·Chrome 0.018ms였습니다. 이는 평균 82.5문자인 1,250입력의 표본
-          측정이며 초기 로딩 비용과 구분됩니다.{' '}
-          <a className="underline underline-offset-4" href="https://github.com/ongjin/garu/blob/v0.10.0/docs/wiki/research-history.md">
+          줄바꿈은 항상 문장 경계로 보고, 문장 끝의 ㅋㅋ·이모지·물결표는 앞 문장에 붙입니다.
+          고정 뉴스 9,355문단의 공백 삭제/공백·종결부호 삭제 조건에서 경계 F1
+          96.56%/96.92%, 인스타그램 평가 문단에서 77.89%를 기록했습니다. 부호 없이 이어 쓴
+          대화체는 아직 약합니다. Apple M4 Node의 로드 후 평균은 약 0.020ms였습니다. 이는 평균
+          82.5문자인 1,250입력의 표본 측정이며 초기 로딩 비용과 구분됩니다.{' '}
+          <a className="underline underline-offset-4" href="https://github.com/ongjin/garu/blob/v0.13.0/docs/wiki/research-history.md">
             측정 조건과 한계
           </a>
         </p>
