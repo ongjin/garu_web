@@ -8,7 +8,7 @@
 
 ## 핵심 사실
 
-- 본체 garu-ko 0.13.0, Orama·MiniSearch 통합 패키지 0.8.0
+- 본체 garu-ko 0.13.1, Orama·MiniSearch 통합 패키지 0.8.0
 - 정확도 수치는 연구 과정에서 참조한 고정 평가셋의 결과이며 미열람 일반화 성능을 뜻하지 않는다.
 
 - 모델 1.34MB(brotli q11 압축), WASM raw 447KB / gzip 191KB. 모델이 npm 패키지에 번들되어 CDN·별도 다운로드 불필요.
@@ -18,9 +18,9 @@
 - 실행 환경: WebAssembly 지원 모던 브라우저, Node.js 18+, Bun, Deno. 모바일 웹 실용적.
 - 엔진 코드는 Apache-2.0이며, 포함된 사전 데이터는 Apache-2.0·CC BY-SA 2.0 KR 등 공급원별 조건을 따른다. 소스: https://github.com/ongjin/garu
 
-- [패키지 라이선스](https://github.com/ongjin/garu/blob/v0.13.0/js/LICENSE)
-- [프로젝트 출처 고지](https://github.com/ongjin/garu/blob/v0.13.0/js/NOTICE)
-- [사전 데이터 고지](https://github.com/ongjin/garu/blob/v0.13.0/js/models/NOTICE.md)
+- [패키지 라이선스](https://github.com/ongjin/garu/blob/v0.13.1/js/LICENSE)
+- [프로젝트 출처 고지](https://github.com/ongjin/garu/blob/v0.13.1/js/NOTICE)
+- [사전 데이터 고지](https://github.com/ongjin/garu/blob/v0.13.1/js/models/NOTICE.md)
 
 ## 설치
 
